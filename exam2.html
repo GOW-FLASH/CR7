@@ -604,9 +604,7 @@
                 </div>
                 
                 <div class="exam-actions">
-                    <button id="prev-btn" class="btn" disabled>
-                        <i class="fas fa-arrow-right"></i> السابق
-                    </button>
+                    <!-- تم حذف زر السابق فقط -->
                     <button id="next-btn" class="btn" style="display: none;">
                         التالي <i class="fas fa-arrow-left"></i>
                     </button>
@@ -647,7 +645,6 @@
         const totalQuestionsEl = document.getElementById('total-questions');
         const timerEl = document.getElementById('timer');
         const progressBar = document.getElementById('progress-bar');
-        const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
         const submitExamBtn = document.getElementById('submit-exam');
         const studentNameEl = document.getElementById('student-name');
@@ -1190,7 +1187,6 @@
             examState.answeredQuestions = new Array(examState.totalQuestions).fill(false);
         }
 
-        // ... باقي الدوال تبقى كما هي (displayCurrentQuestion, showAnswerResult, etc.)
         // عرض السؤال الحالي
         function displayCurrentQuestion() {
             const question = examState.questions[examState.currentQuestionIndex];
@@ -1293,9 +1289,6 @@
             updateNavigationButtons();
         }
 
-        // ... باقي الدوال تبقى كما هي من exam.html
-        // (showAnswerResult, updateProgress, updateNavigationButtons, startTimer, etc.)
-
         // عرض نتيجة الإجابة
         function showAnswerResult() {
             const question = examState.questions[examState.currentQuestionIndex];
@@ -1380,8 +1373,6 @@
 
         // تحديث أزرار التنقل
         function updateNavigationButtons() {
-            prevBtn.disabled = examState.currentQuestionIndex === 0;
-            
             // إظهار زر إنهاء الاختبار إذا تم الإجابة على جميع الأسئلة
             const allAnswered = examState.answeredQuestions.every(Boolean);
             if (allAnswered) {
@@ -1446,18 +1437,6 @@
             }
         }
 
-        // الانتقال للسؤال السابق
-        function moveToPreviousQuestion() {
-            clearTimeout(examState.autoMoveTimeout);
-            clearInterval(examState.timer);
-            
-            if (examState.currentQuestionIndex > 0) {
-                examState.currentQuestionIndex--;
-                displayCurrentQuestion();
-                startTimer();
-            }
-        }
-
         // حساب النتيجة
         function calculateResult() {
             let correctCount = 0;
@@ -1477,10 +1456,6 @@
         }
 
         // مستمعي الأحداث
-        prevBtn.addEventListener('click', function() {
-            moveToPreviousQuestion();
-        });
-
         nextBtn.addEventListener('click', function() {
             moveToNextQuestion();
         });
