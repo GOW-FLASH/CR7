@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحات الشرف - CR7</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --dark-border: #333;
+            --text-light: #ffffff;
+            --text-muted: #b0b0b0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: 
+                linear-gradient(135deg, rgba(52, 152, 219, 0.05) 0%, rgba(44, 62, 80, 0.05) 100%),
+                var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(52, 152, 219, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(46, 204, 113, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(155, 89, 182, 0.1) 0%, transparent 50%);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(44, 62, 80, 0.9));
+            color: white;
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: #3498db;
+            filter: drop-shadow(0 0 10px rgba(52, 152, 219, 0.5));
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: transparent;
+            color: var(--text-light);
+            padding: 2rem 0;
+            text-align: center;
+            flex-grow: 1;
+            position: relative;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Leaderboards Container */
+        .leaderboards-container {
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 1000px;
+            margin: 2rem auto;
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--dark-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .leaderboards-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+        }
+
+        /* Lecture Tabs */
+        .lecture-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .lecture-tab {
+            background: rgba(40, 40, 40, 0.6);
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-weight: 600;
+        }
+
+        .lecture-tab:hover {
+            border-color: #3498db;
+            transform: translateY(-2px);
+        }
+
+        .lecture-tab.active {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-color: #3498db;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        /* Leaderboard Styles */
+        .leaderboard-section {
+            margin: 2rem 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--text-light);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 2px;
+        }
+
+        .leaderboard {
+            background: rgba(40, 40, 40, 0.6);
+            border-radius: 12px;
+            border: 1px solid var(--dark-border);
+            overflow: hidden;
+        }
+
+        .leaderboard-header {
+            display: grid;
+            grid-template-columns: 80px 1fr 100px 120px;
+            padding: 1rem 1.5rem;
+            background: rgba(52, 152, 219, 0.1);
+            border-bottom: 1px solid var(--dark-border);
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        .leaderboard-item {
+            display: grid;
+            grid-template-columns: 80px 1fr 100px 120px;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--dark-border);
+            transition: all 0.3s ease;
+        }
+
+        .leaderboard-item:hover {
+            background: rgba(52, 152, 219, 0.05);
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .rank {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .rank-1 { color: #f39c12; }
+        .rank-2 { color: #95a5a6; }
+        .rank-3 { color: #cd7f32; }
+
+        .medal {
+            font-size: 1.2rem;
+        }
+
+        .student-name {
+            color: var(--text-light);
+        }
+
+        .score {
+            font-weight: bold;
+            color: var(--success-color);
+        }
+
+        .date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--dark-border);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(26, 26, 26, 0.9);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--dark-border);
+        }
+        
+        .credits {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .footer-text {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .leaderboards-container {
+                padding: 1.5rem;
+                margin: 1rem auto;
+            }
+
+            .lecture-tabs {
+                flex-direction: column;
+            }
+
+            .leaderboard-header,
+            .leaderboard-item {
+                grid-template-columns: 60px 1fr 80px 100px;
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .leaderboard-header,
+            .leaderboard-item {
+                grid-template-columns: 50px 1fr 70px;
+            }
+
+            .date {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الخلفية المتحركة -->
+    <div class="animated-bg"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-trophy"></i>
+                    <h1>لوحات الشرف - CR7</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>لوحات الشرف لكل المحاضرات</h2>
+            
+            <div class="leaderboards-container">
+                <!-- أزرار اختيار المحاضرة -->
+                <div class="lecture-tabs" id="lecture-tabs">
+                    <!-- سيتم ملء الأزرار ديناميكياً -->
+                </div>
+
+                <!-- عرض لوحة الشرف -->
+                <div class="leaderboard-section">
+                    <h3 class="section-title" id="current-lecture-title">لوحة الشرف - المحاضرة الأولى</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-header">
+                            <div>الترتيب</div>
+                            <div>اسم الطالب</div>
+                            <div>الدرجة</div>
+                            <div>التاريخ</div>
+                        </div>
+                        <div id="leaderboard-list">
+                            <!-- سيتم ملء لوحة الشرف ديناميكياً -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- أزرار الإجراءات -->
+                <div class="actions">
+                    <button class="btn" onclick="window.location.href='index.html'">
+                        <i class="fas fa-home"></i>
+                        الصفحة الرئيسية
+                    </button>
+                    <button class="btn btn-success" onclick="clearAllLeaderboards()">
+                        <i class="fas fa-trash"></i>
+                        مسح كل النتائج
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="credits">
+                <i class="fas fa-code"></i> نظام CR7
+            </div>
+            <p class="footer-text">جميع الحقوق محفوظة &copy; 2025 CR7</p>
+        </div>
+    </footer>
+
+    <script>
+        // المحاضرات المتاحة
+        const availableLectures = ['1', '2'];
+        let currentLecture = '1';
+
+        // عناصر DOM
+        const lectureTabsEl = document.getElementById('lecture-tabs');
+        const currentLectureTitleEl = document.getElementById('current-lecture-title');
+        const leaderboardListEl = document.getElementById('leaderboard-list');
+
+        // تحميل الصفحة
+        function loadPage() {
+            createLectureTabs();
+            displayLeaderboard(currentLecture);
+        }
+
+        // إنشاء أزرار المحاضرات
+        function createLectureTabs() {
+            lectureTabsEl.innerHTML = '';
+            
+            availableLectures.forEach(lecture => {
+                const tab = document.createElement('div');
+                tab.className = `lecture-tab ${lecture === currentLecture ? 'active' : ''}`;
+                tab.textContent = `المحاضرة ${getArabicNumber(lecture)}`;
+                tab.onclick = () => switchLecture(lecture);
+                lectureTabsEl.appendChild(tab);
+            });
+        }
+
+        // تبديل المحاضرة
+        function switchLecture(lecture) {
+            currentLecture = lecture;
+            createLectureTabs();
+            displayLeaderboard(lecture);
+        }
+
+        // عرض لوحة الشرف لمحاضرة محددة
+        function displayLeaderboard(lectureNumber) {
+            const lectureKey = `cr7Leaderboard_lecture_${lectureNumber}`;
+            const leaderboard = JSON.parse(localStorage.getItem(lectureKey)) || [];
+            
+            // تحديث العنوان
+            currentLectureTitleEl.textContent = `لوحة الشرف - المحاضرة ${getArabicNumber(lectureNumber)}`;
+            
+            leaderboardListEl.innerHTML = '';
+
+            if (leaderboard.length === 0) {
+                leaderboardListEl.innerHTML = `
+                    <div class="empty-message">
+                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <div>لا توجد نتائج مسجلة بعد لهذه المحاضرة</div>
+                    </div>
+                `;
+                return;
+            }
+
+            leaderboard.forEach((item, index) => {
+                let rankIcon = '';
+                if (index === 0) rankIcon = '🥇';
+                else if (index === 1) rankIcon = '🥈';
+                else if (index === 2) rankIcon = '🥉';
+                
+                const leaderboardItem = document.createElement('div');
+                leaderboardItem.className = 'leaderboard-item';
+                leaderboardItem.innerHTML = `
+                    <div class="rank ${index < 3 ? `rank-${index + 1}` : ''}">
+                        ${rankIcon} ${index + 1}
+                    </div>
+                    <div class="student-name">${item.studentName}</div>
+                    <div class="score">${item.score}%</div>
+                    <div class="date">${item.date}</div>
+                `;
+                
+                leaderboardListEl.appendChild(leaderboardItem);
+            });
+        }
+
+        // مسح كل النتائج
+        function clearAllLeaderboards() {
+            if (confirm('هل أنت متأكد من أنك تريد مسح كل النتائج؟ لا يمكن التراجع عن هذا الإجراء.')) {
+                availableLectures.forEach(lecture => {
+                    const lectureKey = `cr7Leaderboard_lecture_${lecture}`;
+                    localStorage.removeItem(lectureKey);
+                });
+                displayLeaderboard(currentLecture);
+                alert('تم مسح كل النتائج بنجاح');
+            }
+        }
+
+        // دالة مساعدة لتحويل الأرقام إلى عربية
+        function getArabicNumber(num) {
+            const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            return num.toString().split('').map(char => arabicNumbers[char] || char).join('');
+        }
+
+        // بدء التطبيق
+        window.addEventListener('load', loadPage);
+    </script>
+</body>
+</html>

@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتائج الاختبار - CR7</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --dark-border: #333;
+            --text-light: #ffffff;
+            --text-muted: #b0b0b0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: 
+                linear-gradient(135deg, rgba(52, 152, 219, 0.05) 0%, rgba(44, 62, 80, 0.05) 100%),
+                var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(52, 152, 219, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(46, 204, 113, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(155, 89, 182, 0.1) 0%, transparent 50%);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(44, 62, 80, 0.9));
+            color: white;
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: #3498db;
+            filter: drop-shadow(0 0 10px rgba(52, 152, 219, 0.5));
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: transparent;
+            color: var(--text-light);
+            padding: 2rem 0;
+            text-align: center;
+            flex-grow: 1;
+            position: relative;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Results Container */
+        .results-container {
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 900px;
+            margin: 2rem auto;
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--dark-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .results-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+        }
+
+        /* Score Display */
+        .score-display {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: rgba(40, 40, 40, 0.6);
+            border-radius: 15px;
+            border: 2px solid var(--dark-border);
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            position: relative;
+            background: conic-gradient(
+                var(--success-color) 0% var(--score-percentage, 0%),
+                rgba(255, 255, 255, 0.1) var(--score-percentage, 0%) 100%
+            );
+            box-shadow: 0 0 30px rgba(46, 204, 113, 0.3);
+        }
+
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: var(--dark-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-value {
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3.5rem;
+        }
+
+        .score-text {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .score-percentage {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        .score-grade {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+        }
+
+        .grade-excellent {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.4);
+        }
+
+        .grade-very-good {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .grade-good {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            box-shadow: 0 0 20px rgba(243, 156, 18, 0.4);
+        }
+
+        .grade-pass {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+            box-shadow: 0 0 20px rgba(155, 89, 182, 0.4);
+        }
+
+        .grade-fail {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.4);
+        }
+
+        /* Results Details */
+        .results-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-card {
+            background: rgba(40, 40, 40, 0.6);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--dark-border);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .detail-card:hover {
+            border-color: #3498db;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.2);
+        }
+
+        .detail-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+
+        .detail-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .detail-label {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Leaderboard */
+        .leaderboard-section {
+            margin: 2rem 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--text-light);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 2px;
+        }
+
+        .leaderboard {
+            background: rgba(40, 40, 40, 0.6);
+            border-radius: 12px;
+            border: 1px solid var(--dark-border);
+            overflow: hidden;
+        }
+
+        .leaderboard-header {
+            display: grid;
+            grid-template-columns: 80px 1fr 100px 120px;
+            padding: 1rem 1.5rem;
+            background: rgba(52, 152, 219, 0.1);
+            border-bottom: 1px solid var(--dark-border);
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        .leaderboard-item {
+            display: grid;
+            grid-template-columns: 80px 1fr 100px 120px;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--dark-border);
+            transition: all 0.3s ease;
+        }
+
+        .leaderboard-item:hover {
+            background: rgba(52, 152, 219, 0.05);
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .leaderboard-item.current-user {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid #2ecc71;
+        }
+
+        .rank {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .rank-1 { color: #f39c12; }
+        .rank-2 { color: #95a5a6; }
+        .rank-3 { color: #cd7f32; }
+
+        .medal {
+            font-size: 1.2rem;
+        }
+
+        .student-name {
+            color: var(--text-light);
+        }
+
+        .score {
+            font-weight: bold;
+            color: var(--success-color);
+        }
+
+        .date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--dark-border);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(26, 26, 26, 0.9);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--dark-border);
+        }
+        
+        .credits {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .footer-text {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .results-container {
+                padding: 1.5rem;
+                margin: 1rem auto;
+            }
+
+            .score-circle {
+                width: 150px;
+                height: 150px;
+            }
+
+            .score-circle::before {
+                width: 130px;
+                height: 130px;
+            }
+
+            .score-value {
+                font-size: 2.5rem;
+            }
+
+            .results-details {
+                grid-template-columns: 1fr;
+            }
+
+            .leaderboard-header,
+            .leaderboard-item {
+                grid-template-columns: 60px 1fr 80px 100px;
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .score-circle {
+                width: 120px;
+                height: 120px;
+            }
+
+            .score-circle::before {
+                width: 100px;
+                height: 100px;
+            }
+
+            .score-value {
+                font-size: 2rem;
+            }
+
+            .leaderboard-header,
+            .leaderboard-item {
+                grid-template-columns: 50px 1fr 70px;
+            }
+
+            .date {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الخلفية المتحركة -->
+    <div class="animated-bg"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <h1>نتائج CR7</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>نتيجة الاختبار</h2>
+            
+            <div class="results-container">
+                <!-- عرض النتيجة -->
+                <div class="score-display">
+                    <div class="score-circle" id="score-circle">
+                        <div class="score-value" id="score-value">0%</div>
+                    </div>
+                    <div class="score-text" id="student-name-display">الطالب: -</div>
+                    <div class="score-percentage" id="score-details">0 من 0 أسئلة</div>
+                    <div class="score-grade" id="score-grade">-</div>
+                </div>
+
+                <!-- تفاصيل النتيجة -->
+                <div class="results-details">
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="detail-value" id="correct-answers">0</div>
+                        <div class="detail-label">إجابات صحيحة</div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="detail-value" id="wrong-answers">0</div>
+                        <div class="detail-label">إجابات خاطئة</div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="detail-value" id="percentage">0%</div>
+                        <div class="detail-label">النسبة المئوية</div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="detail-value" id="completion-time">--:--</div>
+                        <div class="detail-label">وقت الإكمال</div>
+                    </div>
+                </div>
+
+                <!-- لوحة الشرف -->
+                <div class="leaderboard-section">
+                    <h3 class="section-title">لوحة الشرف - المحاضرة الأولى</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-header">
+                            <div>الترتيب</div>
+                            <div>اسم الطالب</div>
+                            <div>الدرجة</div>
+                            <div>التاريخ</div>
+                        </div>
+                        <div id="leaderboard-list">
+                            <!-- سيتم ملء لوحة الشرف ديناميكياً -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- أزرار الإجراءات -->
+                <div class="actions">
+                    <button class="btn btn-success" id="retry-btn">
+                        <i class="fas fa-redo"></i>
+                        إعادة الاختبار
+                    </button>
+                    <button class="btn" id="home-btn">
+                        <i class="fas fa-home"></i>
+                        الصفحة الرئيسية
+                    </button>
+                    <button class="btn btn-secondary" id="details-btn">
+                        <i class="fas fa-chart-bar"></i>
+                        تفاصيل النتائج
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="credits">
+                <i class="fas fa-code"></i> نظام CR7
+            </div>
+            <p class="footer-text">جميع الحقوق محفوظة &copy; 2025 CR7</p>
+        </div>
+    </footer>
+
+    <script>
+        // بيانات النتائج
+        let resultsData = {
+            studentName: '',
+            lecture: '',
+            score: 0,
+            correctAnswers: 0,
+            totalQuestions: 0,
+            percentage: 0,
+            grade: '',
+            completionTime: new Date().toLocaleTimeString('ar-EG')
+        };
+
+        // عناصر DOM
+        const scoreValueEl = document.getElementById('score-value');
+        const scoreCircleEl = document.getElementById('score-circle');
+        const studentNameDisplayEl = document.getElementById('student-name-display');
+        const scoreDetailsEl = document.getElementById('score-details');
+        const scoreGradeEl = document.getElementById('score-grade');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const wrongAnswersEl = document.getElementById('wrong-answers');
+        const percentageEl = document.getElementById('percentage');
+        const completionTimeEl = document.getElementById('completion-time');
+        const leaderboardListEl = document.getElementById('leaderboard-list');
+        const retryBtn = document.getElementById('retry-btn');
+        const homeBtn = document.getElementById('home-btn');
+        const detailsBtn = document.getElementById('details-btn');
+
+        // تحميل بيانات النتيجة
+        function loadResults() {
+            // جلب البيانات من localStorage
+            resultsData.studentName = localStorage.getItem('studentName') || 'طالب';
+            resultsData.lecture = localStorage.getItem('selectedLecture') || '1';
+            resultsData.score = parseInt(localStorage.getItem('examScore')) || 0;
+            resultsData.correctAnswers = parseInt(localStorage.getItem('correctAnswers')) || 0;
+            resultsData.totalQuestions = parseInt(localStorage.getItem('totalQuestions')) || 50;
+            resultsData.percentage = resultsData.score;
+
+            // تحديث واجهة النتائج
+            updateResultsDisplay();
+            
+            // حفظ النتيجة في لوحة الشرف
+            saveToLeaderboard();
+            
+            // عرض لوحة الشرف
+            displayLeaderboard();
+        }
+
+        // تحديث عرض النتائج
+        function updateResultsDisplay() {
+            // حساب الإجابات الخاطئة
+            const wrongAnswers = resultsData.totalQuestions - resultsData.correctAnswers;
+            
+            // تحديث القيم
+            scoreValueEl.textContent = `${resultsData.percentage}%`;
+            studentNameDisplayEl.textContent = `الطالب: ${resultsData.studentName}`;
+            scoreDetailsEl.textContent = `${resultsData.correctAnswers} من ${resultsData.totalQuestions} أسئلة`;
+            correctAnswersEl.textContent = resultsData.correctAnswers;
+            wrongAnswersEl.textContent = wrongAnswers;
+            percentageEl.textContent = `${resultsData.percentage}%`;
+            completionTimeEl.textContent = resultsData.completionTime;
+
+            // تحديث دائرة النتيجة
+            scoreCircleEl.style.setProperty('--score-percentage', `${resultsData.percentage}%`);
+
+            // تحديد التقدير
+            let gradeText = '';
+            let gradeClass = '';
+            
+            if (resultsData.percentage >= 95) {
+                gradeText = 'امتياز 🎉';
+                gradeClass = 'grade-excellent';
+            } else if (resultsData.percentage >= 85) {
+                gradeText = 'جيد جداً 👍';
+                gradeClass = 'grade-very-good';
+            } else if (resultsData.percentage >= 75) {
+                gradeText = 'جيد 👌';
+                gradeClass = 'grade-good';
+            } else if (resultsData.percentage >= 50) {
+                gradeText = 'مقبول ✅';
+                gradeClass = 'grade-pass';
+            } else {
+                gradeText = 'راسب ❌';
+                gradeClass = 'grade-fail';
+            }
+            
+            scoreGradeEl.textContent = gradeText;
+            scoreGradeEl.className = `score-grade ${gradeClass}`;
+        }
+
+        // حفظ النتيجة في لوحة الشرف
+    // حفظ النتيجة في لوحة الشرف الخاصة بالمحاضرة
+function saveToLeaderboard() {
+    // جلب رقم المحاضرة من localStorage
+    const lectureNumber = localStorage.getItem('selectedLecture') || '1';
+    const lectureKey = `cr7Leaderboard_lecture_${lectureNumber}`;
+    
+    let leaderboard = JSON.parse(localStorage.getItem(lectureKey)) || [];
+    
+    // إضافة النتيجة الجديدة
+    leaderboard.push({
+        studentName: resultsData.studentName,
+        lecture: `المحاضرة ${resultsData.lecture}`,
+        score: resultsData.percentage,
+        correctAnswers: resultsData.correctAnswers,
+        totalQuestions: resultsData.totalQuestions,
+        date: new Date().toLocaleDateString('ar-EG'),
+        time: resultsData.completionTime,
+        timestamp: new Date().getTime()
+    });
+    
+    // ترتيب النتائج من الأعلى للأقل
+    leaderboard.sort((a, b) => b.score - a.score);
+    
+    // الاحتفاظ بأعلى 10 نتائج فقط
+    leaderboard = leaderboard.slice(0, 10);
+    
+    // حفظ النتائج المحدثة للمحاضرة المحددة
+    localStorage.setItem(lectureKey, JSON.stringify(leaderboard));
+}
+
+// عرض لوحة الشرف للمحاضرة الحالية
+function displayLeaderboard() {
+    const lectureNumber = localStorage.getItem('selectedLecture') || '1';
+    const lectureKey = `cr7Leaderboard_lecture_${lectureNumber}`;
+    const leaderboard = JSON.parse(localStorage.getItem(lectureKey)) || [];
+    
+    leaderboardListEl.innerHTML = '';
+
+    // تحديث عنوان لوحة الشرف
+    const sectionTitle = document.querySelector('.section-title');
+    if (sectionTitle) {
+        sectionTitle.textContent = `لوحة الشرف - المحاضرة ${getArabicNumber(lectureNumber)}`;
+    }
+
+    if (leaderboard.length === 0) {
+        leaderboardListEl.innerHTML = `
+            <div class="leaderboard-item" style="grid-template-columns: 1fr; text-align: center; padding: 2rem;">
+                <div style="color: var(--text-muted);">لا توجد نتائج مسجلة بعد لهذه المحاضرة</div>
+            </div>
+        `;
+        return;
+    }
+
+    leaderboard.forEach((item, index) => {
+        const isCurrentUser = item.studentName === resultsData.studentName && 
+                            item.score === resultsData.percentage;
+        
+        let rankIcon = '';
+        if (index === 0) rankIcon = '🥇';
+        else if (index === 1) rankIcon = '🥈';
+        else if (index === 2) rankIcon = '🥉';
+        
+        const leaderboardItem = document.createElement('div');
+        leaderboardItem.className = `leaderboard-item ${isCurrentUser ? 'current-user' : ''}`;
+        leaderboardItem.innerHTML = `
+            <div class="rank ${index < 3 ? `rank-${index + 1}` : ''}">
+                ${rankIcon} ${index + 1}
+            </div>
+            <div class="student-name">${item.studentName}</div>
+            <div class="score">${item.score}%</div>
+            <div class="date">${item.date}</div>
+        `;
+        
+        leaderboardListEl.appendChild(leaderboardItem);
+    });
+}
+
+// دالة مساعدة لتحويل الأرقام إلى عربية
+function getArabicNumber(num) {
+    const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    return num.toString().split('').map(char => arabicNumbers[char] || char).join('');
+}
+        // عرض تفاصيل النتائج
+        function showDetailedResults() {
+            const wrongAnswers = resultsData.totalQuestions - resultsData.correctAnswers;
+            const message = `
+تفاصيل النتيجة:
+
+👤 الطالب: ${resultsData.studentName}
+📚 المحاضرة: ${resultsData.lecture}
+✅ الإجابات الصحيحة: ${resultsData.correctAnswers}
+❌ الإجابات الخاطئة: ${wrongAnswers}
+📊 النسبة المئوية: ${resultsData.percentage}%
+⏰ وقت الإكمال: ${resultsData.completionTime}
+🏆 التقدير: ${scoreGradeEl.textContent}
+
+${resultsData.percentage >= 50 ? '🎊 مبروك! لقد اجتزت الاختبار بنجاح' : '💪 لا تيأس! يمكنك المحاولة مرة أخرى'}
+            `;
+            
+            alert(message);
+        }
+
+        // مستمعي الأحداث للأزرار
+        retryBtn.addEventListener('click', function() {
+            if (confirm('هل تريد إعادة الاختبار؟')) {
+                window.location.href = 'exam.html';
+            }
+        });
+
+        homeBtn.addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+
+        detailsBtn.addEventListener('click', function() {
+            showDetailedResults();
+        });
+
+        // بدء التطبيق
+        window.addEventListener('load', loadResults);
+    </script>
+</body>
+</html>

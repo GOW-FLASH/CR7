@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبارات CR7 - تصميم برامج الحاسب الآلي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --dark-border: #333;
+            --text-light: #ffffff;
+            --text-muted: #b0b0b0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: 
+                linear-gradient(135deg, rgba(52, 152, 219, 0.05) 0%, rgba(44, 62, 80, 0.05) 100%),
+                var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(52, 152, 219, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(46, 204, 113, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(155, 89, 182, 0.1) 0%, transparent 50%);
+        }
+
+        .computer-screen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 300px;
+            background: linear-gradient(45deg, #000000, #1a1a1a);
+            border-radius: 15px;
+            box-shadow: 
+                0 0 0 8px #222,
+                0 0 50px rgba(52, 152, 219, 0.5),
+                inset 0 0 20px rgba(0, 0, 0, 0.8);
+            animation: float 8s ease-in-out infinite;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .screen-content {
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, #0a0a0a 0%, #111 100%);
+            border-radius: 8px;
+            padding: 25px;
+            font-family: 'Courier New', monospace;
+            color: #00ff00;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screen-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 255, 0, 0.03) 0px,
+                    rgba(0, 255, 0, 0.03) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+            pointer-events: none;
+        }
+
+        .code-line {
+            font-size: 15px;
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: typeLine 0.5s forwards;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .code-line:nth-child(1) { animation-delay: 0.5s; }
+        .code-line:nth-child(2) { animation-delay: 1s; }
+        .code-line:nth-child(3) { animation-delay: 1.5s; }
+        .code-line:nth-child(4) { animation-delay: 2s; }
+        .code-line:nth-child(5) { animation-delay: 2.5s; }
+        .code-line:nth-child(6) { animation-delay: 3s; }
+        .code-line:nth-child(7) { animation-delay: 3.5s; }
+
+        .cr7-highlight {
+            color: #3498db;
+            font-weight: bold;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .matrix-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(0, 255, 0, 0.1) 50px,
+                    rgba(0, 255, 0, 0.1) 51px
+                );
+            animation: matrixMove 20s linear infinite;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            color: rgba(52, 152, 219, 0.4);
+            font-size: 14px;
+            animation: floatElement 20s linear infinite;
+            text-shadow: 0 0 15px currentColor;
+        }
+
+        .floating-element:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; content: "{}"; }
+        .floating-element:nth-child(2) { top: 20%; right: 10%; animation-delay: 3s; content: "&lt;/&gt;"; }
+        .floating-element:nth-child(3) { bottom: 30%; left: 15%; animation-delay: 6s; content: "function()"; }
+        .floating-element:nth-child(4) { bottom: 10%; right: 20%; animation-delay: 9s; content: "CR7++;"; }
+        .floating-element:nth-child(5) { top: 40%; left: 25%; animation-delay: 12s; content: "const = 2025"; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
+            33% { transform: translate(-50%, -50%) translateY(-15px) rotate(1deg); }
+            66% { transform: translate(-50%, -50%) translateY(10px) rotate(-1deg); }
+        }
+
+        @keyframes typeLine {
+            to { opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { 
+                text-shadow: 0 0 5px #3498db, 0 0 10px #3498db;
+                color: #3498db;
+            }
+            to { 
+                text-shadow: 0 0 15px #3498db, 0 0 30px #3498db, 0 0 45px #3498db;
+                color: #5dade2;
+            }
+        }
+
+        @keyframes matrixMove {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        @keyframes floatElement {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0; }
+            10% { opacity: 0.6; }
+            50% { transform: translate(100px, 200px) rotate(180deg) scale(1.2); opacity: 0.8; }
+            90% { opacity: 0.4; }
+            100% { transform: translate(-50px, 400px) rotate(360deg) scale(0.8); opacity: 0; }
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(44, 62, 80, 0.9));
+            color: white;
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        header::before {
+            content: "CR7_SYSTEM";
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            opacity: 0.3;
+            font-family: 'Courier New', monospace;
+            color: white;
+            letter-spacing: 2px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: #3498db;
+            filter: drop-shadow(0 0 10px rgba(52, 152, 219, 0.5));
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(52, 152, 219, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: transparent;
+            color: var(--text-light);
+            padding: 5rem 0;
+            text-align: center;
+            flex-grow: 1;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: -1;
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(52, 152, 219, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            color: var(--text-muted);
+        }
+        
+        /* Welcome Form */
+        .welcome-form {
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+            margin: 2rem auto;
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--dark-border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .welcome-form::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+        }
+        
+        .form-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #333;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: rgba(40, 40, 40, 0.8);
+            color: var(--text-light);
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            transform: translateY(-2px);
+            background: rgba(50, 50, 50, 0.9);
+        }
+        
+        .form-group input::placeholder {
+            color: #666;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 16px 35px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 10px 25px rgba(52, 152, 219, 0.4),
+                0 0 30px rgba(52, 152, 219, 0.2);
+        }
+        
+        .btn:disabled {
+            background: #7f8c8d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .btn:disabled:hover::before {
+            left: -100%;
+        }
+        
+        .coming-soon {
+            background: rgba(255, 249, 230, 0.1);
+            border: 2px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 1.2rem;
+            text-align: center;
+            margin-top: 1rem;
+            color: #ffeaa7;
+            font-weight: 600;
+            display: none;
+            backdrop-filter: blur(10px);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(26, 26, 26, 0.9);
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--dark-border);
+        }
+        
+        footer::before {
+            content: "/* CR7 2025 */";
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            opacity: 0.3;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .credits {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .footer-text {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            header::before {
+                display: none;
+            }
+            
+            footer::before {
+                display: none;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .welcome-form {
+                padding: 2rem;
+                margin: 1rem auto;
+            }
+
+            .computer-screen {
+                width: 350px;
+                height: 220px;
+            }
+
+            .code-line {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الخلفية المتحركة -->
+    <div class="animated-bg">
+        <div class="computer-screen">
+            <div class="screen-content">
+                <div class="matrix-rain"></div>
+                <div class="code-line"><span style="color: #ff6b6b;">class</span> <span class="cr7-highlight">CR7_System</span> {</div>
+                <div class="code-line">&nbsp;&nbsp;<span style="color: #ffd93d;">constructor</span>() {</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #6bcf7f;">this</span>.version = <span style="color: #3498db;">"2025"</span>;</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #6bcf7f;">this</span>.author = <span style="color: #3498db;">"CR7"</span>;</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #6bcf7f;">this</span>.type = <span style="color: #3498db;">"Exam_System"</span>;</div>
+                <div class="code-line">&nbsp;&nbsp;}</div>
+                <div class="code-line">}</div>
+                <div class="code-line"><span style="color: #ffd93d;">const</span> system = <span style="color: #ff6b6b;">new</span> <span class="cr7-highlight">CR7_System</span>();</div>
+            </div>
+        </div>
+        
+        <!-- عناصر عائمة -->
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <h1>اختبارات CR7</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>نظام الاختبارات الإلكتروني</h2>
+            <p>اختبارات متقدمة في تصميم برامج الحاسب الآلي</p>
+            
+            <div class="welcome-form">
+                <form id="exam-setup-form">
+                    <div class="form-group">
+                        <label for="student-name">اسم الطالب</label>
+                        <input type="text" id="student-name" placeholder="أدخل اسمك هنا" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lecture-select">اختر المحاضرة</label>
+                        <select id="lecture-select" required>
+                            <option value="">-- اختر المحاضرة --</option>
+                            <option value="1">المحاضرة الأولى</option>
+                            <option value="2">المحاضرة الثانية</option>
+                            <option value="3">المحاضرة الثالثة</option>
+                            <option value="4">المحاضرة الرابعة</option>
+                            <option value="5">المحاضرة الخامسة</option>
+                            <option value="6">المحاضرة السادسة</option>
+                            <option value="7">المحاضرة السابعة</option>
+                            <option value="8">المحاضرة الثامنة</option>
+                            <option value="9">المحاضرة التاسعة</option>
+                            <option value="10">المحاضرة العاشرة</option>
+                            <option value="11">المحاضرة الحادية عشرة</option>
+                            <option value="12">المحاضرة الثانية عشرة</option>
+                            <option value="13">المحاضرة الثالثة عشرة</option>
+                        </select>
+                    </div>
+                    
+                    <div id="coming-soon-message" class="coming-soon">
+                        <i class="fas fa-clock"></i> 
+                        الاختبار غير متاح حالياً، سيتم إضافته قريباً إن شاء الله
+                    </div>
+                    
+                    <button type="submit" class="btn" id="start-exam-btn">
+                        بدء الاختبار
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="credits">
+                <i class="fas fa-code"></i> نظام CR7
+            </div>
+            <p class="footer-text">جميع الحقوق محفوظة &copy; 2025 CR7</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const examSetupForm = document.getElementById('exam-setup-form');
+        const lectureSelect = document.getElementById('lecture-select');
+        const comingSoonMessage = document.getElementById('coming-soon-message');
+        const startExamBtn = document.getElementById('start-exam-btn');
+
+       // المحاضرات المتاحة حالياً
+const availableLectures = ['1', '2'];
+
+        // التحقق من المحاضرات المتاحة
+        lectureSelect.addEventListener('change', function() {
+            const selectedLecture = this.value;
+            
+            if (availableLectures.includes(selectedLecture)) {
+                // المحاضرة متاحة
+                comingSoonMessage.style.display = 'none';
+                startExamBtn.disabled = false;
+            } else if (selectedLecture) {
+                // المحاضرة غير متاحة
+                comingSoonMessage.style.display = 'block';
+                startExamBtn.disabled = true;
+            } else {
+                // لم يتم اختيار محاضرة
+                comingSoonMessage.style.display = 'none';
+                startExamBtn.disabled = false;
+            }
+        });
+
+        // بدء الاختبار
+        examSetupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // في index.html غير السكريبت علشان يفتح exam2.html للمحاضرة الثانية
+examSetupForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const studentName = document.getElementById('student-name').value;
+    const selectedLecture = lectureSelect.value;
+    
+    if (!availableLectures.includes(selectedLecture)) {
+        alert('هذه المحاضرة غير متاحة للاختبار حالياً.');
+        return;
+    }
+    
+    localStorage.setItem('studentName', studentName);
+    localStorage.setItem('selectedLecture', selectedLecture);
+    
+    // تحديد أي صفحة تفتح
+    if (selectedLecture === '1') {
+        window.location.href = 'exam.html';
+    } else if (selectedLecture === '2') {
+        window.location.href = 'exam2.html';
+    }
+});
+        });
+
+        // تحميل البيانات المحفوظة
+        window.addEventListener('load', function() {
+            const savedName = localStorage.getItem('studentName');
+            if (savedName) {
+                document.getElementById('student-name').value = savedName;
+            }
+        });
+    </script>
+</body>
+</html>

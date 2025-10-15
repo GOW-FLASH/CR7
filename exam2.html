@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبارات CR7 - امتحان المحاضرة الثانية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --dark-border: #333;
+            --text-light: #ffffff;
+            --text-muted: #b0b0b0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: 
+                linear-gradient(135deg, rgba(52, 152, 219, 0.05) 0%, rgba(44, 62, 80, 0.05) 100%),
+                var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(52, 152, 219, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(46, 204, 113, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(155, 89, 182, 0.1) 0%, transparent 50%);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(44, 62, 80, 0.9));
+            color: white;
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: #3498db;
+            filter: drop-shadow(0 0 10px rgba(52, 152, 219, 0.5));
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .exam-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .student-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .progress-info {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .progress-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .progress-item.answered {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid #2ecc71;
+        }
+
+        .progress-item.unanswered {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid #e74c3c;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: transparent;
+            color: var(--text-light);
+            padding: 2rem 0;
+            text-align: center;
+            flex-grow: 1;
+            position: relative;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Exam Container */
+        .exam-container {
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 900px;
+            margin: 2rem auto;
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--dark-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exam-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+        }
+
+        /* Exam Header */
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .question-counter {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        .timer {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .timer.warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            animation: pulse 1s infinite;
+        }
+
+        .timer.danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        /* Question Styles */
+        .question {
+            background: rgba(40, 40, 40, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--dark-border);
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            border-color: #3498db;
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.2);
+        }
+
+        .question h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .question-number {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: rgba(50, 50, 50, 0.8);
+            border: 2px solid #333;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .option:hover {
+            border-color: #3498db;
+            background: rgba(52, 152, 219, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .option.selected {
+            border-color: #2ecc71;
+            background: rgba(46, 204, 113, 0.1);
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .option.wrong {
+            border-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+            box-shadow: 0 0 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .option.correct {
+            border-color: #2ecc71;
+            background: rgba(46, 204, 113, 0.1);
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .option.answered {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option.answered:hover {
+            transform: none;
+            border-color: #333;
+            background: rgba(50, 50, 50, 0.8);
+        }
+
+        .option input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .option.answered input {
+            cursor: not-allowed;
+        }
+
+        .option-status {
+            position: absolute;
+            left: 15px;
+            font-size: 1.2rem;
+        }
+
+        .option-status.correct {
+            color: #2ecc71;
+        }
+
+        .option-status.wrong {
+            color: #e74c3c;
+        }
+
+        .true-false-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .true-false-options .option {
+            flex: 1;
+            text-align: center;
+            font-weight: bold;
+            justify-content: center;
+        }
+
+        .result-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .result-feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #2ecc71;
+            color: #2ecc71;
+        }
+
+        .result-feedback.wrong {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+            color: #e74c3c;
+        }
+
+        .explanation {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 8px;
+            border-right: 4px solid #3498db;
+            display: none;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .explanation.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Exam Actions */
+        .exam-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--dark-border);
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .btn:disabled {
+            background: #7f8c8d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn:disabled:hover::before {
+            left: -100%;
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(26, 26, 26, 0.9);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--dark-border);
+        }
+        
+        .credits {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .footer-text {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .exam-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .progress-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .exam-container {
+                padding: 1.5rem;
+                margin: 1rem auto;
+            }
+
+            .exam-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .exam-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .exam-actions .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .question {
+                padding: 1.5rem;
+            }
+
+            .option {
+                padding: 12px 15px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الخلفية المتحركة -->
+    <div class="animated-bg"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <h1>اختبارات CR7 - المحاضرة الثانية</h1>
+                </div>
+                <div class="exam-info">
+                    <div class="student-info" id="student-info-display">
+                        الطالب: <span id="student-name">-</span>
+                    </div>
+                    <div class="student-info">
+                        المحاضرة: <span id="lecture-number">الثانية</span>
+                    </div>
+                    <div class="progress-info">
+                        <div class="progress-item answered" id="answered-count">
+                            <i class="fas fa-check-circle"></i> <span id="answered">0</span>
+                        </div>
+                        <div class="progress-item unanswered" id="unanswered-count">
+                            <i class="fas fa-times-circle"></i> <span id="unanswered">50</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>اختبار المحاضرة الثانية - خرائط التدفق</h2>
+            
+            <div class="exam-container">
+                <div class="exam-header">
+                    <div class="question-counter">
+                        السؤال <span id="current-question">1</span> من <span id="total-questions">50</span>
+                    </div>
+                    <div class="timer" id="timer">01:00</div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                
+                <div id="question-container">
+                    <!-- الأسئلة تظهر هنا ديناميكياً -->
+                </div>
+                
+                <div class="exam-actions">
+                    <button id="prev-btn" class="btn" disabled>
+                        <i class="fas fa-arrow-right"></i> السابق
+                    </button>
+                    <button id="next-btn" class="btn" style="display: none;">
+                        التالي <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button id="submit-exam" class="btn btn-success" style="display: none;">
+                        إنهاء الاختبار <i class="fas fa-flag-checkered"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="credits">
+                <i class="fas fa-code"></i> نظام CR7
+            </div>
+            <p class="footer-text">جميع الحقوق محفوظة &copy; 2025 CR7</p>
+        </div>
+    </footer>
+
+    <script>
+        // بيانات الاختبار
+        let examState = {
+            currentQuestionIndex: 0,
+            userAnswers: [],
+            answeredQuestions: [],
+            timer: null,
+            timeLeft: 60,
+            questions: [],
+            totalQuestions: 50,
+            autoMoveTimeout: null
+        };
+
+        // عناصر DOM
+        const questionContainer = document.getElementById('question-container');
+        const currentQuestionEl = document.getElementById('current-question');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const timerEl = document.getElementById('timer');
+        const progressBar = document.getElementById('progress-bar');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitExamBtn = document.getElementById('submit-exam');
+        const studentNameEl = document.getElementById('student-name');
+        const lectureNumberEl = document.getElementById('lecture-number');
+        const answeredCountEl = document.getElementById('answered');
+        const unansweredCountEl = document.getElementById('unanswered');
+
+        // تحميل بيانات الطالب
+        function loadStudentData() {
+            const studentName = localStorage.getItem('studentName');
+
+            if (studentName) {
+                studentNameEl.textContent = studentName;
+            }
+            
+            // المحاضرة الثانية ثابتة في هذه الصفحة
+            lectureNumberEl.textContent = 'الثانية';
+            totalQuestionsEl.textContent = examState.totalQuestions;
+            unansweredCountEl.textContent = examState.totalQuestions;
+        }
+
+        // بدء الاختبار
+        function startExam() {
+            loadStudentData();
+            generateQuestions();
+            displayCurrentQuestion();
+            startTimer();
+            updateProgress();
+        }
+
+        // توليد الأسئلة للمحاضرة الثانية (50 سؤال)
+        function generateQuestions() {
+            examState.questions = [
+                // أسئلة صح/خطأ (25 سؤال)
+                {
+                    id: 1,
+                    question: "خرائط التدفق هي تمثيلات رسومية تستخدم لتوضيح خطوات عملية",
+                    type: "trueFalse",
+                    correctAnswer: true,
+                    explanation: "✅ صح - الصفحة 3: 'هي تمثيلات رسومية تستخدم لتوضيح خطوات عملية'"
+                },
+                {
+                    id: 2,
+                    question: "يمكن تحويل خرائط التدفق إلى برنامج بلغة برمجة",
+                    type: "trueFalse", 
+                    correctAnswer: true,
+                    explanation: "✅ صح - الصفحة 3: 'بمجرد اعداد خرائط التنفق للمشكلة يصبح من السهل تحويل الحل الى برنامج'"
+                },
+                {
+                    id: 3,
+                    question: "الاتجاه الطبيعي للعمليات هو من اليمين إلى اليسار",
+                    type: "trueFalse",
+                    correctAnswer: false,
+                    explanation: "❌ خطأ - الصفحة 5: 'الاتجاه الطبيعي للعمليات والبيانات هو من اليسار الى اليمين ومن اعلى الى أسفل'"
+                },
+                {
+                    id: 4,
+                    question: "رمز المعالجة يخرج منه خط اتجاه واحد فقط",
+                    type: "trueFalse",
+                    correctAnswer: true,
+                    explanation: "✅ صح - الصفحة 5: 'أي رمز معالجة / عمليات يجب ان يخرج منه خط اتجاه واحد فقط'"
+                },
+                {
+                    id: 5,
+                    question: "رمز القرار يمكن أن يخرج منه ثلاثة خطوط اتجاه",
+                    type: "trueFalse",
+                    correctAnswer: true,
+                    explanation: "✅ صح - الصفحة 5: 'من الممكن ان يخرج منه خطان على الأقل او ثلاثة خطوط'"
+                },
+                {
+                    id: 6,
+                    question: "الرمز الطرفي يمكن أن يكون له أكثر من خط اتجاه",
+                    type: "trueFalse",
+                    correctAnswer: false,
+                    explanation: "❌ خطأ - الصفحة 5: 'يجب ان يصحبه خط اتجاه واحد فقط'"
+                },
+                {
+                    id: 7,
+                    question: "رمز المفسر يستخدم لكتابة الملاحظات التوضيحية", 
+                    type: "trueFalse",
+                    correctAnswer: true,
+                    explanation: "✅ صح - الصفحة 6: 'نستخدم رمز المفسر لوصف البيانات او بعض الخطوات الحسابية'"
+                },
+                {
+                    id: 8,
+                    question: "خرائط التدفق لا تساعد في اكتشاف الأخطاء",
+                    type: "trueFalse",
+                    correctAnswer: false,
+                    explanation: "❌ خطأ - الصفحة 7: 'تساعد خرائط التنفق بعد رسمها على تتبع خطوات الحل للكتشاف الأخطاء'"
+                },
+                {
+                    id: 9,
+                    question: "خرائط التدفق تساعد في كتابة الأكواد بكفاءة",
+                    type: "trueFalse",
+                    correctAnswer: true,
+                    explanation: "✅ صح - الصفحة 7: 'تساعد خرائط التنفق بعد رسمها على كتابة البرامج بطريقة فعالة'"
+                },
+                {
+                    id: 10,
+                    question: "خرائط التدفق تعقد فهم العمليات",
+                    type: "trueFalse", 
+                    correctAnswer: false,
+                    explanation: "❌ خطأ - الصفحة 8: 'تساعد خرائط التدفق في تحويل العمليات المعقدة إلى سلسلة من الخطوات البسيطة'"
+                },
+                {
+                    id: 11,
+                    question: "خرائط التدفق توفر طريقة مشتركة للفهم بين أعضاء الفريق",
+                    type: "trueFalse",
+                    correctAnswer: true,
+                    explanation: "✅ صح - الصفحة 8: 'توفر طريقة مشتركة لفهم العمليات بين مختلف أعضاء الفريق'"
+                },
+                {
+                    id: 12,
+                    question: "الخطوة الأولى في إنشاء خريطة التدفق هي رسم المخطط",
+                    type: "trueFalse",
+                    correctAnswer: false,
+                    explanation: "❌ خطأ - الصفحة 9: 'الخطوة الأولى: تحديد العملية أو النظام'"
+                },
+                {
+                    id: 13,
+                    question: "جمع المعلومات يأتي بعد تحديد العملية",
+                    type: "trueFalse",
+                    correctAnswer: true,
+                    explanation: "✅ صح - الصفحة 9: 'الخطوة الثانية: جمع المعلومات'"
+                },
+                {
+                    id: 14,
+                    question: "المراجعة هي الخطوة الأخيرة في إنشاء خريطة التدفق",
+                    type: "trueFalse",
+                    correctAnswer: true,
+                    explanation: "✅ صح - الصفحة 9: 'الخطوة الخامسة: مراجعة وتعديل'"
+                },
+                {
+                    id: 15,
+                    question: "Microsoft Visio من أدوات رسم خرائط التدفق",
+                    type: "trueFalse",
+                    correctAnswer: true,
+                    explanation: "✅ صح - الصفحة 10: 'برامج الحاسوب: Microsoft Visio'"
+                },
+                {
+                    id: 16,
+                    question: "لا يمكن استخدام الورق والأقلام لرسم خرائط التدفق",
+                    type: "trueFalse",
+                    correctAnswer: false,
+                    explanation: "❌ خطأ - الصفحة 10: 'الطرق التقليدية: الورق والأقلام'"
+                },
+                {
+                    id: 17,
+                    question: "رمز الربط يستخدم عند تعقد الخريطة",
+                    type: "trueFalse",
+                    correctAnswer: true,
+                    explanation: "✅ صح - الصفحة 6: 'إذا تعقدت خرائط التدفق... من الأفضل تقسيم الخريطة الى اجزاء اصغر وربطها برمز الربط'"
+                },
+                {
+                    id: 18,
+                    question: "خرائط التدفق تستخدم فقط للعمليات البسيطة",
+                    type: "trueFalse",
+                    correctAnswer: false,
+                    explanation: "❌ خطأ - الصفحة 6: يمكن تقسيم الخرائط المعقدة لأجزاء أصغر"
+                },
+                {
+                    id: 19,
+                    question: "خرائط التدفق تساعد في تحليل العمليات",
+                    type: "trueFalse",
+                    correctAnswer: true,
+                    explanation: "✅ صح - الصفحة 8: 'تمكن من تحليل العملية وتحديد نقاط التحسين'"
+                },
+                {
+                    id: 20,
+                    question: "خرائط التدفق لا تستخدم كوسيلة للتوثيق",
+                    type: "trueFalse",
+                    correctAnswer: false,
+                    explanation: "❌ خطأ - الصفحة 8: 'تستخدم كوسيلة لتوثيق العمليات'"
+                },
+                {
+                    id: 21,
+                    question: "Draw.io من أدوات الرسم عبر الإنترنت",
+                    type: "trueFalse",
+                    correctAnswer: true,
+                    explanation: "✅ صح - الصفحة 10: 'Lucidchart - Draw.io - SmartDraw'"
+                },
+                {
+                    id: 22,
+                    question: "الاتجاه الطبيعي من الأسفل إلى الأعلى",
+                    type: "trueFalse",
+                    correctAnswer: false,
+                    explanation: "❌ خطأ - الصفحة 5: 'من اعلى الى أسفل'"
+                },
+                {
+                    id: 23,
+                    question: "خرائط التدفق تسهل عملية تصحيح الأخطاء",
+                    type: "trueFalse",
+                    correctAnswer: true,
+                    explanation: "✅ صح - الصفحة 7: 'تصحيح الأخطاء : تساعد خرائط التنفق بعد رسمها على تتبع خطوات الحل'"
+                },
+                {
+                    id: 24,
+                    question: "الرمز الطرفي يمثل البداية والنهاية فقط",
+                    type: "trueFalse",
+                    correctAnswer: true,
+                    explanation: "✅ صح - الصفحة 4: 'بداية أو نهاية العملية'"
+                },
+                {
+                    id: 25,
+                    question: "خرائط التدفق لا تساعد في إصلاح البرامج",
+                    type: "trueFalse",
+                    correctAnswer: false,
+                    explanation: "❌ خطأ - الصفحة 7: 'كفاءة اصالح البرنامج : يصبح اصالح البرنامج سهلا بمساعدة خرائط التنفق'"
+                },
+
+                // أسئلة اختيار من متعدد (25 سؤال)
+                {
+                    id: 26,
+                    question: "ما هو التعريف الصحيح لخرائط التدفق حسب المحتوى؟",
+                    type: "multipleChoice",
+                    options: [
+                        "برامج حاسوبية",
+                        "لغات برمجة", 
+                        "تمثيلات رسومية لخطوات عملية",
+                        "قواعد البيانات"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: تمثيلات رسومية لخطوات عملية - الصفحة 3: 'هي تمثيلات رسومية تستخدم لتوضيح خطوات عملية'"
+                },
+                {
+                    id: 27,
+                    question: "ما الغرض الرئيسي من استخدام خرائط التدفق في البرمجة؟",
+                    type: "multipleChoice",
+                    options: [
+                        "تنفيذ البرنامج",
+                        "تحويل الحل إلى برنامج",
+                        "تصميم الواجهات", 
+                        "إدارة قواعد البيانات"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: تحويل الحل إلى برنامج - الصفحة 3: 'بمجرد اعداد خرائط التنفق للمشكلة يصبح من السهل تحويل الحل الى برنامج'"
+                },
+                {
+                    id: 28,
+                    question: "ما الاتجاه الطبيعي لخرائط التدفق؟",
+                    type: "multipleChoice", 
+                    options: [
+                        "من اليمين لليسار",
+                        "من الأسفل للأعلى",
+                        "من الأعلى للأسفل ومن اليسار لليمين",
+                        "بشكل دائري"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: من الأعلى للأسفل ومن اليسار لليمين - الصفحة 5: 'الاتجاه الطبيعي للعمليات والبيانات هو من اليسار الى اليمين ومن اعلى الى أسفل'"
+                },
+                {
+                    id: 29,
+                    question: "كم خط اتجاه يخرج من رمز المعالجة؟",
+                    type: "multipleChoice",
+                    options: [
+                        "واحد",
+                        "اثنان",
+                        "ثلاثة",
+                        "不限"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: واحد - الصفحة 5: 'أي رمز معالجة / عمليات يجب ان يخرج منه خط اتجاه واحد فقط'"
+                },
+                {
+                    id: 30,
+                    question: "ما الرمز المستخدم لتمثيل القرار؟",
+                    type: "multipleChoice",
+                    options: [
+                        "المستطيل",
+                        "المعين",
+                        "الدائرة", 
+                        "متوازي الأضلاع"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: المعين - الصفحة 4: 'قرار/اختيار' - والمعين هو الرمز القياسي للقرار"
+                },
+                {
+                    id: 31,
+                    question: "ما عدد خطوط الخروج من رمز القرار؟",
+                    type: "multipleChoice",
+                    options: [
+                        "واحد فقط",
+                        "اثنان على الأقل",
+                        "أربعة",
+                        "لا يوجد"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: اثنان على الأقل - الصفحة 5: 'من الممكن ان يخرج منه خطان على الأقل او ثلاثة خطوط'"
+                },
+                {
+                    id: 32,
+                    question: "ماذا يمثل الرمز الطرفي؟",
+                    type: "multipleChoice",
+                    options: [
+                        "الإدخال فقط",
+                        "المعالجة فقط",
+                        "البداية أو النهاية",
+                        "القرار فقط"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: البداية أو النهاية - الصفحة 4: 'بداية أو نهاية العملية'"
+                },
+                {
+                    id: 33,
+                    question: "متى نستخدم رمز المفسر؟",
+                    type: "multipleChoice",
+                    options: [
+                        "لتمثيل البداية",
+                        "لكتابة الملاحظات التوضيحية",
+                        "لتمثيل النهاية",
+                        "لرسم الأسهم"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: لكتابة الملاحظات التوضيحية - الصفحة 6: 'نستخدم رمز المفسر لوصف البيانات او بعض الخطوات الحسابية'"
+                },
+                {
+                    id: 34,
+                    question: "ما فائدة رمز الربط؟",
+                    type: "multipleChoice",
+                    options: [
+                        "لإنهاء الخريطة",
+                        "لربط الأجزاء المتفرقة",
+                        "لتمثيل الإدخال",
+                        "لرسم الأسهم"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: لربط الأجزاء المتفرقة - الصفحة 6: 'ربطها برمز الربط'"
+                },
+                {
+                    id: 35,
+                    question: "أي من هذه المميزات ذكرت لخرائط التدفق؟",
+                    type: "multipleChoice",
+                    options: [
+                        "تعقيد العمليات",
+                        "تصحيح الأخطاء",
+                        "إطالة الوقت",
+                        "زيادة التكاليف"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: تصحيح الأخطاء - الصفحة 7: 'تصحيح الأخطاء : تساعد خرائط التنفق بعد رسمها على تتبع خطوات الحل للكتشاف الأخطاء'"
+                },
+                {
+                    id: 36,
+                    question: "كيف تساعد خرائط التدفق في كتابة البرامج؟",
+                    type: "multipleChoice",
+                    options: [
+                        "تجعلها أبطأ",
+                        "تجعلها أقل كفاءة",
+                        "تساعد في كتابتها بطريقة فعالة",
+                        "تزيد من الأخطاء"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: تساعد في كتابتها بطريقة فعالة - الصفحة 7: 'كتابة الاكوك بكفاءة : تساعد خرائط التنفق بعد رسمها على كتابة البرامج بطريقة فعالة'"
+                },
+                {
+                    id: 37,
+                    question: "ما أول خطوة في إنشاء خريطة التدفق؟",
+                    type: "multipleChoice",
+                    options: [
+                        "جمع المعلومات",
+                        "رسم المخطط",
+                        "تحديد العملية",
+                        "المراجعة"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: تحديد العملية - الصفحة 9: 'الخطوة الأولى: تحديد العملية أو النظام'"
+                },
+                {
+                    id: 38,
+                    question: "ما الخطوة التي تلي تحديد العملية؟",
+                    type: "multipleChoice",
+                    options: [
+                        "المراجعة",
+                        "جمع المعلومات",
+                        "الرسم",
+                        "التنفيذ"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: جمع المعلومات - الصفحة 9: 'الخطوة الثانية: جمع المعلومات'"
+                },
+                {
+                    id: 39,
+                    question: "أي من هذه الأدوات ذكرت لرسم خرائط التدفق؟",
+                    type: "multipleChoice",
+                    options: [
+                        "Photoshop",
+                        "Excel",
+                        "Lucidchart",
+                        "Word"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: Lucidchart - الصفحة 10: 'Lucidchart - Draw.io - SmartDraw'"
+                },
+                {
+                    id: 40,
+                    question: "أي من هذه يعتبر من الطرق التقليدية؟",
+                    type: "multipleChoice",
+                    options: [
+                        "Visio",
+                        "الورق والأقلام",
+                        "Draw.io",
+                        "Lucidchart"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: الورق والأقلام - الصفحة 10: 'الطرق التقليدية: الورق والأقلام'"
+                },
+                {
+                    id: 41,
+                    question: "كيف يمكن التعامل مع الخرائط المعقدة؟",
+                    type: "multipleChoice",
+                    options: [
+                        "حذفها",
+                        "تقسيمها لأجزاء أصغر",
+                        "تجاهلها",
+                        "رسمها بحجم أصغر"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: تقسيمها لأجزاء أصغر - الصفحة 6: 'من الأفضل تقسيم الخريطة الى اجزاء اصغر'"
+                },
+                {
+                    id: 42,
+                    question: "ما فائدة خرائط التدفق في تحليل العمليات؟",
+                    type: "multipleChoice",
+                    options: [
+                        "تعقيدها",
+                        "تحليلها بشكل أكثر فعالية",
+                        "إطالتها",
+                        "إخفائها"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: تحليلها بشكل أكثر فعالية - الصفحة 7: 'تحليل الأفعال : باستخدام خرائط التنفق فإن المسألة يمكن تحليلها بصورة اكثر فعالية'"
+                },
+                {
+                    id: 43,
+                    question: "كيف تساعد خرائط التدفق في الفريق؟",
+                    type: "multipleChoice",
+                    options: [
+                        "تزيد الخلافات",
+                        "توحد الفهم",
+                        "تعقد التواصل",
+                        "تبطئ العمل"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: توحد الفهم - الصفحة 8: 'توفر طريقة مشتركة لفهم العمليات بين مختلف أعضاء الفريق'"
+                },
+                {
+                    id: 44,
+                    question: "ما الغرض من مراجعة خريطة التدفق؟",
+                    type: "multipleChoice",
+                    options: [
+                        "التعقيد",
+                        "التأكد من الدقة والوضوح",
+                        "الإطالة",
+                        "الحذف"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: التأكد من الدقة والوضوح - الصفحة 9: 'مراجعة وتعديل: راجع المخطط للتحقق من الدقة والوضوح'"
+                },
+                {
+                    id: 45,
+                    question: "ماذا تمثل الأسهم في الخريطة؟",
+                    type: "multipleChoice",
+                    options: [
+                        "الزينة",
+                        "اتجاه وترتيب التنفيذ",
+                        "الألوان",
+                        "الحجم"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: اتجاه وترتيب التنفيذ - الصفحة 4: 'خط اتجاه' - لتحديد تسلسل التدفق"
+                },
+                {
+                    id: 46,
+                    question: "أي رمز يستخدم لتمثيل الإدخال؟",
+                    type: "multipleChoice",
+                    options: [
+                        "المعين",
+                        "المستطيل",
+                        "متوازي الأضلاع",
+                        "الدائرة"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: متوازي الأضلاع - الصفحة 4: 'ادخال/اخراج Input/Output' - ومتوازي الأضلاع هو الرمز القياسي"
+                },
+                {
+                    id: 47,
+                    question: "ما فائدة خرائط التدفق في التوثيق؟",
+                    type: "multipleChoice",
+                    options: [
+                        "زيادة التعقيد",
+                        "ضمان الاتساق والجودة",
+                        "إضاعة الوقت",
+                        "تقليل الدقة"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ضمان الاتساق والجودة - الصفحة 8: 'تستخدم كوسيلة لتوثيق العمليات لضمان الاتساق والجودة'"
+                },
+                {
+                    id: 48,
+                    question: "كم خط اتجاه يدخل إلى رمز القرار؟",
+                    type: "multipleChoice",
+                    options: [
+                        "واحد",
+                        "اثنان",
+                        "ثلاثة",
+                        "أربعة"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: واحد - الصفحة 5: 'أي رمز قرار / اختيار يجب ان يدخل فيه خط اتجاه واحد فقط'"
+                },
+                {
+                    id: 49,
+                    question: "ماذا يفعل رمز الربط؟",
+                    type: "multipleChoice",
+                    options: [
+                        "ينهي الخريطة",
+                        "يربط الأجزاء المتفرقة",
+                        "يرسم الأسهم",
+                        "يكتب الملاحظات"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: يربط الأجزاء المتفرقة - الصفحة 6: 'ربطها برمز الربط'"
+                },
+                {
+                    id: 50,
+                    question: "ما الهدف النهائي من استخدام خرائط التدفق؟",
+                    type: "multipleChoice",
+                    options: [
+                        "تعقيد العمليات",
+                        "تسهيل وتحسين العمليات",
+                        "إطالة وقت العمل",
+                        "زيادة التكاليف"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: تسهيل وتحسين العمليات - الصفحة 8: 'تساعد خرائط التدفق في تحويل العمليات المعقدة إلى سلسلة من الخطوات البسيطة' و'تمكن من تحليل العملية وتحديد نقاط التحسين'"
+                }
+            ];
+
+            examState.userAnswers = new Array(examState.totalQuestions).fill(null);
+            examState.answeredQuestions = new Array(examState.totalQuestions).fill(false);
+        }
+
+        // ... باقي الدوال تبقى كما هي (displayCurrentQuestion, showAnswerResult, etc.)
+        // عرض السؤال الحالي
+        function displayCurrentQuestion() {
+            const question = examState.questions[examState.currentQuestionIndex];
+            
+            currentQuestionEl.textContent = examState.currentQuestionIndex + 1;
+            
+            // تحديث شريط التقدم
+            const progress = ((examState.currentQuestionIndex + 1) / examState.totalQuestions) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            let questionHTML = `
+                <div class="question">
+                    <div class="question-number">
+                        السؤال ${examState.currentQuestionIndex + 1}
+                    </div>
+                    <h3>${question.question}</h3>
+                    <div class="options">
+            `;
+            
+            if (question.type === "trueFalse") {
+                questionHTML += `
+                    <div class="true-false-options">
+                        <label class="option ${examState.userAnswers[examState.currentQuestionIndex] === true ? 'selected answered' : ''}">
+                            <input type="radio" name="answer" value="true" 
+                                ${examState.userAnswers[examState.currentQuestionIndex] === true ? 'checked' : ''}
+                                ${examState.answeredQuestions[examState.currentQuestionIndex] ? 'disabled' : ''}>
+                            صح
+                        </label>
+                        <label class="option ${examState.userAnswers[examState.currentQuestionIndex] === false ? 'selected answered' : ''}">
+                            <input type="radio" name="answer" value="false" 
+                                ${examState.userAnswers[examState.currentQuestionIndex] === false ? 'checked' : ''}
+                                ${examState.answeredQuestions[examState.currentQuestionIndex] ? 'disabled' : ''}>
+                            خطأ
+                        </label>
+                    </div>
+                `;
+            } else {
+                question.options.forEach((option, index) => {
+                    questionHTML += `
+                        <label class="option ${examState.userAnswers[examState.currentQuestionIndex] === index ? 'selected answered' : ''}">
+                            <input type="radio" name="answer" value="${index}" 
+                                ${examState.userAnswers[examState.currentQuestionIndex] === index ? 'checked' : ''}
+                                ${examState.answeredQuestions[examState.currentQuestionIndex] ? 'disabled' : ''}>
+                            ${option}
+                        </label>
+                    `;
+                });
+            }
+            
+            questionHTML += `
+                    </div>
+                    <div class="result-feedback" id="result-feedback"></div>
+                    <div class="explanation" id="explanation">
+                        ${question.explanation}
+                    </div>
+                </div>
+            `;
+            
+            questionContainer.innerHTML = questionHTML;
+            
+            // إذا كان السؤال مجاباً عليه مسبقاً، نعرض النتيجة
+            if (examState.answeredQuestions[examState.currentQuestionIndex]) {
+                showAnswerResult();
+            }
+            
+            // إضافة مستمعي الأحداث للخيارات (فقط إذا لم يتم الإجابة بعد)
+            if (!examState.answeredQuestions[examState.currentQuestionIndex]) {
+                document.querySelectorAll('.option input').forEach(input => {
+                    input.addEventListener('change', function() {
+                        let answerValue;
+                        if (question.type === "trueFalse") {
+                            answerValue = this.value === 'true';
+                        } else {
+                            answerValue = parseInt(this.value);
+                        }
+                        
+                        examState.userAnswers[examState.currentQuestionIndex] = answerValue;
+                        examState.answeredQuestions[examState.currentQuestionIndex] = true;
+                        
+                        // عرض نتيجة الإجابة
+                        showAnswerResult();
+                        
+                        updateProgress();
+                        updateNavigationButtons();
+                        
+                        // إظهار زر التالي بعد الإجابة
+                        nextBtn.style.display = 'inline-block';
+                        
+                        // الانتقال التلقائي بعد 3 ثواني
+                        clearTimeout(examState.autoMoveTimeout);
+                        examState.autoMoveTimeout = setTimeout(() => {
+                            if (examState.currentQuestionIndex < examState.totalQuestions - 1) {
+                                moveToNextQuestion();
+                            }
+                        }, 3000);
+                    });
+                });
+            }
+            
+            updateNavigationButtons();
+        }
+
+        // ... باقي الدوال تبقى كما هي من exam.html
+        // (showAnswerResult, updateProgress, updateNavigationButtons, startTimer, etc.)
+
+        // عرض نتيجة الإجابة
+        function showAnswerResult() {
+            const question = examState.questions[examState.currentQuestionIndex];
+            const userAnswer = examState.userAnswers[examState.currentQuestionIndex];
+            const isCorrect = userAnswer === question.correctAnswer;
+            
+            // تعطيل جميع الخيارات
+            document.querySelectorAll('.option input').forEach(inp => {
+                inp.disabled = true;
+            });
+            
+            // إضافة رموز الصح والخطأ للخيارات
+            document.querySelectorAll('.option').forEach((option, index) => {
+                // إزالة الفئات السابقة
+                option.classList.remove('correct', 'wrong');
+                
+                if (question.type === "trueFalse") {
+                    // لأسئلة الصح/خطأ
+                    const isTrueOption = option.querySelector('input[value="true"]');
+                    const isFalseOption = option.querySelector('input[value="false"]');
+                    
+                    if (isTrueOption && question.correctAnswer === true) {
+                        option.classList.add('correct');
+                    } else if (isFalseOption && question.correctAnswer === false) {
+                        option.classList.add('correct');
+                    } else if ((isTrueOption && userAnswer === true && !isCorrect) || 
+                               (isFalseOption && userAnswer === false && !isCorrect)) {
+                        option.classList.add('wrong');
+                    }
+                } else {
+                    // لأسئلة الاختيار من متعدد
+                    if (index === question.correctAnswer) {
+                        option.classList.add('correct');
+                    }
+                    if (index === userAnswer && !isCorrect) {
+                        option.classList.add('wrong');
+                    }
+                }
+                
+                // إضافة الرموز
+                if (option.classList.contains('correct') && !option.querySelector('.option-status')) {
+                    const statusIcon = document.createElement('span');
+                    statusIcon.className = 'option-status correct';
+                    statusIcon.innerHTML = '✅';
+                    option.appendChild(statusIcon);
+                } else if (option.classList.contains('wrong') && !option.querySelector('.option-status')) {
+                    const statusIcon = document.createElement('span');
+                    statusIcon.className = 'option-status wrong';
+                    statusIcon.innerHTML = '❌';
+                    option.appendChild(statusIcon);
+                }
+            });
+            
+            // عرض رسالة النتيجة
+            const feedbackEl = document.getElementById('result-feedback');
+            const explanationEl = document.getElementById('explanation');
+            
+            if (isCorrect) {
+                feedbackEl.className = 'result-feedback correct';
+                feedbackEl.innerHTML = '✅ إجابة صحيحة!';
+                feedbackEl.style.display = 'block';
+            } else {
+                feedbackEl.className = 'result-feedback wrong';
+                feedbackEl.innerHTML = '❌ إجابة خاطئة!';
+                feedbackEl.style.display = 'block';
+            }
+            
+            // عرض المبرر
+            if (explanationEl) {
+                explanationEl.classList.add('show');
+            }
+        }
+
+        // تحديث التقدم
+        function updateProgress() {
+            const answered = examState.answeredQuestions.filter(Boolean).length;
+            const unanswered = examState.totalQuestions - answered;
+            
+            answeredCountEl.textContent = answered;
+            unansweredCountEl.textContent = unanswered;
+        }
+
+        // تحديث أزرار التنقل
+        function updateNavigationButtons() {
+            prevBtn.disabled = examState.currentQuestionIndex === 0;
+            
+            // إظهار زر إنهاء الاختبار إذا تم الإجابة على جميع الأسئلة
+            const allAnswered = examState.answeredQuestions.every(Boolean);
+            if (allAnswered) {
+                submitExamBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'none';
+            } else {
+                submitExamBtn.style.display = 'none';
+                nextBtn.style.display = examState.answeredQuestions[examState.currentQuestionIndex] ? 'inline-block' : 'none';
+            }
+        }
+
+        // بدء المؤقت
+        function startTimer() {
+            examState.timeLeft = 60;
+            updateTimerDisplay();
+            timerEl.classList.remove('warning', 'danger');
+            
+            clearInterval(examState.timer);
+            examState.timer = setInterval(() => {
+                examState.timeLeft--;
+                updateTimerDisplay();
+                
+                if (examState.timeLeft <= 10) {
+                    timerEl.classList.add('danger');
+                } else if (examState.timeLeft <= 30) {
+                    timerEl.classList.add('warning');
+                }
+                
+                if (examState.timeLeft <= 0) {
+                    clearInterval(examState.timer);
+                    // إذا انتهى الوقت ولم يتم الإجابة، يحسب خطأ ويتنقل للسؤال التالي
+                    if (!examState.answeredQuestions[examState.currentQuestionIndex]) {
+                        examState.userAnswers[examState.currentQuestionIndex] = null;
+                        examState.answeredQuestions[examState.currentQuestionIndex] = true;
+                        updateProgress();
+                    }
+                    moveToNextQuestion();
+                }
+            }, 1000);
+        }
+
+        // تحديث عرض المؤقت
+        function updateTimerDisplay() {
+            const minutes = Math.floor(examState.timeLeft / 60);
+            const seconds = examState.timeLeft % 60;
+            timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // الانتقال للسؤال التالي
+        function moveToNextQuestion() {
+            clearTimeout(examState.autoMoveTimeout);
+            
+            if (examState.currentQuestionIndex < examState.questions.length - 1) {
+                clearInterval(examState.timer);
+                examState.currentQuestionIndex++;
+                displayCurrentQuestion();
+                startTimer();
+                nextBtn.style.display = 'none';
+            } else {
+                submitExamBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'none';
+            }
+        }
+
+        // الانتقال للسؤال السابق
+        function moveToPreviousQuestion() {
+            clearTimeout(examState.autoMoveTimeout);
+            clearInterval(examState.timer);
+            
+            if (examState.currentQuestionIndex > 0) {
+                examState.currentQuestionIndex--;
+                displayCurrentQuestion();
+                startTimer();
+            }
+        }
+
+        // حساب النتيجة
+        function calculateResult() {
+            let correctCount = 0;
+            examState.questions.forEach((question, index) => {
+                if (examState.userAnswers[index] === question.correctAnswer) {
+                    correctCount++;
+                }
+            });
+            
+            const percentage = Math.round((correctCount / examState.questions.length) * 100);
+            
+            localStorage.setItem('examScore', percentage);
+            localStorage.setItem('correctAnswers', correctCount);
+            localStorage.setItem('totalQuestions', examState.questions.length);
+            localStorage.setItem('answeredQuestions', examState.answeredQuestions.filter(Boolean).length);
+            localStorage.setItem('selectedLecture', '2'); // تحديد أنها المحاضرة الثانية
+        }
+
+        // مستمعي الأحداث
+        prevBtn.addEventListener('click', function() {
+            moveToPreviousQuestion();
+        });
+
+        nextBtn.addEventListener('click', function() {
+            moveToNextQuestion();
+        });
+
+        submitExamBtn.addEventListener('click', function() {
+            clearInterval(examState.timer);
+            clearTimeout(examState.autoMoveTimeout);
+            calculateResult();
+            window.location.href = 'results.html';
+        });
+
+        // بدء التطبيق
+        window.addEventListener('load', startExam);
+    </script>
+</body>
+</html>
