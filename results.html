@@ -603,7 +603,7 @@
 
                 <!-- لوحة الشرف -->
                 <div class="leaderboard-section">
-                    <h3 class="section-title">لوحة الشرف - المحاضرة الأولى</h3>
+                    <h3 class="section-title" id="leaderboard-title">لوحة الشرف - المحاضرة الأولى</h3>
                     <div class="leaderboard">
                         <div class="leaderboard-header">
                             <div>الترتيب</div>
@@ -670,6 +670,7 @@
         const percentageEl = document.getElementById('percentage');
         const completionTimeEl = document.getElementById('completion-time');
         const leaderboardListEl = document.getElementById('leaderboard-list');
+        const leaderboardTitleEl = document.getElementById('leaderboard-title');
         const retryBtn = document.getElementById('retry-btn');
         const homeBtn = document.getElementById('home-btn');
         const detailsBtn = document.getElementById('details-btn');
@@ -738,7 +739,6 @@
 
         // حفظ النتيجة في لوحة الشرف الخاصة بالمحاضرة
         function saveToLeaderboard() {
-            // جلب رقم المحاضرة من localStorage
             const lectureNumber = localStorage.getItem('selectedLecture') || '1';
             const lectureKey = `cr7Leaderboard_lecture_${lectureNumber}`;
             
@@ -773,7 +773,6 @@
                 // حفظ النتائج المحدثة للمحاضرة المحددة
                 localStorage.setItem(lectureKey, JSON.stringify(leaderboard));
             }
-            // إذا عند الطالب نتيجة سابقة، ما نحفظش النتيجة الجديدة (نحتفظ بالنتيجة القديمة فقط)
         }
 
         // عرض لوحة الشرف للمحاضرة الحالية
@@ -785,10 +784,7 @@
             leaderboardListEl.innerHTML = '';
 
             // تحديث عنوان لوحة الشرف
-            const sectionTitle = document.querySelector('.section-title');
-            if (sectionTitle) {
-                sectionTitle.textContent = `لوحة الشرف - المحاضرة ${getArabicNumber(lectureNumber)}`;
-            }
+            leaderboardTitleEl.textContent = `لوحة الشرف - المحاضرة ${getArabicNumber(lectureNumber)}`;
 
             if (leaderboard.length === 0) {
                 leaderboardListEl.innerHTML = `
@@ -832,11 +828,13 @@
         // عرض تفاصيل النتائج
         function showDetailedResults() {
             const wrongAnswers = resultsData.totalQuestions - resultsData.correctAnswers;
+            const lectureNumber = localStorage.getItem('selectedLecture') || '1';
+            
             const message = `
 تفاصيل النتيجة:
 
 👤 الطالب: ${resultsData.studentName}
-📚 المحاضرة: ${resultsData.lecture}
+📚 المحاضرة: ${lectureNumber}
 ✅ الإجابات الصحيحة: ${resultsData.correctAnswers}
 ❌ الإجابات الخاطئة: ${wrongAnswers}
 📊 النسبة المئوية: ${resultsData.percentage}%
@@ -849,12 +847,24 @@ ${resultsData.percentage >= 50 ? '🎊 مبروك! لقد اجتزت الاخت�
             alert(message);
         }
 
-        // مستمعي الأحداث للأزرار
-        retryBtn.addEventListener('click', function() {
+        // إعادة الاختبار
+        function retryExam() {
+            const lectureNumber = localStorage.getItem('selectedLecture') || '1';
+            let examPage = '';
+            
+            if (lectureNumber === '1') examPage = 'exam.html';
+            else if (lectureNumber === '2') examPage = 'exam2.html';
+            else if (lectureNumber === '4') examPage = 'exam4.html';
+            else if (lectureNumber === '5') examPage = 'exam5.html';
+            else examPage = 'exam.html';
+            
             if (confirm('هل تريد إعادة الاختبار؟')) {
-                window.location.href = 'exam.html';
+                window.location.href = examPage;
             }
-        });
+        }
+
+        // مستمعي الأحداث للأزرار
+        retryBtn.addEventListener('click', retryExam);
 
         homeBtn.addEventListener('click', function() {
             window.location.href = 'index.html';
