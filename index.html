@@ -598,8 +598,8 @@
         const comingSoonMessage = document.getElementById('coming-soon-message');
         const startExamBtn = document.getElementById('start-exam-btn');
 
-       // المحاضرات المتاحة حالياً
-const availableLectures = ['1', '2'];
+        // المحاضرات المتاحة حالياً
+        const availableLectures = ['1', '2', '4', '5'];
 
         // التحقق من المحاضرات المتاحة
         lectureSelect.addEventListener('change', function() {
@@ -624,28 +624,27 @@ const availableLectures = ['1', '2'];
         examSetupForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // في index.html غير السكريبت علشان يفتح exam2.html للمحاضرة الثانية
-examSetupForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const studentName = document.getElementById('student-name').value;
-    const selectedLecture = lectureSelect.value;
-    
-    if (!availableLectures.includes(selectedLecture)) {
-        alert('هذه المحاضرة غير متاحة للاختبار حالياً.');
-        return;
-    }
-    
-    localStorage.setItem('studentName', studentName);
-    localStorage.setItem('selectedLecture', selectedLecture);
-    
-    // تحديد أي صفحة تفتح
-    if (selectedLecture === '1') {
-        window.location.href = 'exam.html';
-    } else if (selectedLecture === '2') {
-        window.location.href = 'exam2.html';
-    }
-});
+            const studentName = document.getElementById('student-name').value;
+            const selectedLecture = lectureSelect.value;
+            
+            if (!availableLectures.includes(selectedLecture)) {
+                alert('هذه المحاضرة غير متاحة للاختبار حالياً.');
+                return;
+            }
+            
+            localStorage.setItem('studentName', studentName);
+            localStorage.setItem('selectedLecture', selectedLecture);
+            
+            // تحديد أي صفحة تفتح
+            if (selectedLecture === '1') {
+                window.location.href = 'exam.html';
+            } else if (selectedLecture === '2') {
+                window.location.href = 'exam2.html';
+            } else if (selectedLecture === '4') {
+                window.location.href = 'exam4.html';
+            } else if (selectedLecture === '5') {
+                window.location.href = 'exam5.html';
+            }
         });
 
         // تحميل البيانات المحفوظة
