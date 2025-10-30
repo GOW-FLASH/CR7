@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبارات CR7 - امتحان المحاضرة الخامسة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --dark-border: #333;
+            --text-light: #ffffff;
+            --text-muted: #b0b0b0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: 
+                linear-gradient(135deg, rgba(52, 152, 219, 0.05) 0%, rgba(44, 62, 80, 0.05) 100%),
+                var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(52, 152, 219, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(46, 204, 113, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(155, 89, 182, 0.1) 0%, transparent 50%);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(44, 62, 80, 0.9));
+            color: white;
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: #3498db;
+            filter: drop-shadow(0 0 10px rgba(52, 152, 219, 0.5));
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .exam-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .student-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .progress-info {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .progress-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .progress-item.answered {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid #2ecc71;
+        }
+
+        .progress-item.unanswered {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid #e74c3c;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: transparent;
+            color: var(--text-light);
+            padding: 2rem 0;
+            text-align: center;
+            flex-grow: 1;
+            position: relative;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Exam Container */
+        .exam-container {
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 900px;
+            margin: 2rem auto;
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--dark-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exam-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+        }
+
+        /* Exam Header */
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .question-counter {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        .timer {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .timer.warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            animation: pulse 1s infinite;
+        }
+
+        .timer.danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        /* Question Styles */
+        .question {
+            background: rgba(40, 40, 40, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--dark-border);
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            border-color: #3498db;
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.2);
+        }
+
+        .question h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .question-number {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: rgba(50, 50, 50, 0.8);
+            border: 2px solid #333;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .option:hover {
+            border-color: #3498db;
+            background: rgba(52, 152, 219, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .option.selected {
+            border-color: #2ecc71;
+            background: rgba(46, 204, 113, 0.1);
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .option.wrong {
+            border-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+            box-shadow: 0 0 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .option.correct {
+            border-color: #2ecc71;
+            background: rgba(46, 204, 113, 0.1);
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .option.answered {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option.answered:hover {
+            transform: none;
+            border-color: #333;
+            background: rgba(50, 50, 50, 0.8);
+        }
+
+        .option input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .option.answered input {
+            cursor: not-allowed;
+        }
+
+        .option-label {
+            background: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .option-status {
+            position: absolute;
+            left: 15px;
+            font-size: 1.2rem;
+        }
+
+        .option-status.correct {
+            color: #2ecc71;
+        }
+
+        .option-status.wrong {
+            color: #e74c3c;
+        }
+
+        .result-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .result-feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #2ecc71;
+            color: #2ecc71;
+        }
+
+        .result-feedback.wrong {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+            color: #e74c3c;
+        }
+
+        .explanation {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 8px;
+            border-right: 4px solid #3498db;
+            display: none;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .explanation.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Exam Actions */
+        .exam-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--dark-border);
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .btn:disabled {
+            background: #7f8c8d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn:disabled:hover::before {
+            left: -100%;
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(26, 26, 26, 0.9);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--dark-border);
+        }
+        
+        .credits {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .footer-text {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .exam-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .progress-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .exam-container {
+                padding: 1.5rem;
+                margin: 1rem auto;
+            }
+
+            .exam-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .exam-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .exam-actions .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .question {
+                padding: 1.5rem;
+            }
+
+            .option {
+                padding: 12px 15px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الخلفية المتحركة -->
+    <div class="animated-bg"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <h1>اختبارات CR7 - المحاضرة الخامسة</h1>
+                </div>
+                <div class="exam-info">
+                    <div class="student-info" id="student-info-display">
+                        الطالب: <span id="student-name">-</span>
+                    </div>
+                    <div class="student-info">
+                        المحاضرة: <span id="lecture-number">الخامسة</span>
+                    </div>
+                    <div class="progress-info">
+                        <div class="progress-item answered" id="answered-count">
+                            <i class="fas fa-check-circle"></i> <span id="answered">0</span>
+                        </div>
+                        <div class="progress-item unanswered" id="unanswered-count">
+                            <i class="fas fa-times-circle"></i> <span id="unanswered">50</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>اختبار المحاضرة الخامسة - مقدمة في البرمجة والجافا</h2>
+            
+            <div class="exam-container">
+                <div class="exam-header">
+                    <div class="question-counter">
+                        السؤال <span id="current-question">1</span> من <span id="total-questions">50</span>
+                    </div>
+                    <div class="timer" id="timer">01:00</div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                
+                <div id="question-container">
+                    <!-- الأسئلة تظهر هنا ديناميكياً -->
+                </div>
+                
+                <div class="exam-actions">
+                    <button id="next-btn" class="btn" style="display: none;">
+                        التالي <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button id="submit-exam" class="btn btn-success" style="display: none;">
+                        إنهاء الاختبار <i class="fas fa-flag-checkered"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="credits">
+                <i class="fas fa-code"></i> نظام CR7
+            </div>
+            <p class="footer-text">جميع الحقوق محفوظة &copy; 2025 CR7</p>
+        </div>
+    </footer>
+
+    <script>
+        // بيانات الاختبار
+        let examState = {
+            currentQuestionIndex: 0,
+            userAnswers: [],
+            answeredQuestions: [],
+            timer: null,
+            timeLeft: 60,
+            questions: [],
+            totalQuestions: 50,
+            autoMoveTimeout: null
+        };
+
+        // عناصر DOM
+        const questionContainer = document.getElementById('question-container');
+        const currentQuestionEl = document.getElementById('current-question');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const timerEl = document.getElementById('timer');
+        const progressBar = document.getElementById('progress-bar');
+        const nextBtn = document.getElementById('next-btn');
+        const submitExamBtn = document.getElementById('submit-exam');
+        const studentNameEl = document.getElementById('student-name');
+        const lectureNumberEl = document.getElementById('lecture-number');
+        const answeredCountEl = document.getElementById('answered');
+        const unansweredCountEl = document.getElementById('unanswered');
+
+        // تحميل بيانات الطالب
+        function loadStudentData() {
+            const studentName = localStorage.getItem('studentName');
+
+            if (studentName) {
+                studentNameEl.textContent = studentName;
+            }
+            
+            // المحاضرة الخامسة ثابتة في هذه الصفحة
+            lectureNumberEl.textContent = 'الخامسة';
+            totalQuestionsEl.textContent = examState.totalQuestions;
+            unansweredCountEl.textContent = examState.totalQuestions;
+        }
+
+        // بدء الاختبار
+        function startExam() {
+            loadStudentData();
+            generateQuestions();
+            displayCurrentQuestion();
+            startTimer();
+            updateProgress();
+        }
+
+        // توليد الأسئلة للمحاضرة الخامسة (50 سؤال)
+        function generateQuestions() {
+            examState.questions = [
+                {
+                    id: 1,
+                    question: "أي من اللغات التالية تعتبر لغة منخفضة المستوى؟",
+                    type: "multipleChoice",
+                    options: [
+                        "Java",
+                        "Python", 
+                        "Assembly",
+                        "PHP"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: ج - لغة التجميع (Assembly) هي لغة منخفضة المستوى أقرب لغة الآلة."
+                },
+                {
+                    id: 2,
+                    question: "ما الميزة الرئيسية للغات البرمجة عالية المستوى؟",
+                    type: "multipleChoice",
+                    options: [
+                        "صعوبة فهمها",
+                        "قربها من لغة الآلة",
+                        "قربها من لغة البشر",
+                        "تحتاج لمعرفة العتاد"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: ج - اللغات عالية المستوى تكون أقرب للغة البشر وسهلة الفهم."
+                },
+                {
+                    id: 3,
+                    question: "أي من هذه اللغات تستخدم في برمجة الأنظمة المدمجة؟",
+                    type: "multipleChoice",
+                    options: [
+                        "JavaScript",
+                        "VHDL",
+                        "PHP",
+                        "HTML"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - VHDL تستخدم في برمجة الأنظمة المدمجة والإلكترونيات."
+                },
+                {
+                    id: 4,
+                    question: "ما الفرق الأساسي بين المترجم والمترجم الفوري؟",
+                    type: "multipleChoice",
+                    options: [
+                        "المترجم ينفذ سطراً بسطر",
+                        "المترجم الفوري يحول الكود كاملاً",
+                        "المترجم يحول الكود كاملاً قبل التنفيذ",
+                        "لا فرق بينهما"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: ج - المترجم يحول البرنامج كاملاً قبل التنفيذ بينما المترجم الفوري ينفذ سطراً بسطر."
+                },
+                {
+                    id: 5,
+                    question: "ما الغرض من JVM في لغة الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "كتابة الكود المصدر",
+                        "تحويل الجافا إلى لغة الآلة",
+                        "تشغيل البايت كود على أنظمة مختلفة",
+                        "تصحيح الأخطاء فقط"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: ج - JVM تسمح بتشغيل البايت كود على أي نظام تشغيل."
+                },
+                {
+                    id: 6,
+                    question: "أي من أنواع البيانات التالية في الجافا يستخدم لتخزين القيم المنطقية؟",
+                    type: "multipleChoice",
+                    options: [
+                        "int",
+                        "boolean",
+                        "char",
+                        "float"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - boolean يستخدم لتخزين true أو false."
+                },
+                {
+                    id: 7,
+                    question: "ما المدى الذي يمكن أن يخزنه نوع byte في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "-128 إلى 127",
+                        "-32768 إلى 32767",
+                        "-2^31 إلى 2^31-1",
+                        "0 إلى 255"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - نوع byte يخزن قيم من -128 إلى 127 (8 بت)."
+                },
+                {
+                    id: 8,
+                    question: "أي من هذه اللغات تعتبر لغة برمجة نصية (Scripting)؟",
+                    type: "multipleChoice",
+                    options: [
+                        "C",
+                        "Java",
+                        "Python",
+                        "Assembly"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: ج - Python تستخدم كلغة نصية لأتمتة المهام."
+                },
+                {
+                    id: 9,
+                    question: "ما نوع البيانات المناسب لتخزين رقم عشري بدقة عالية في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "float",
+                        "double",
+                        "int",
+                        "long"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - double يوفر دقة أعلى (64 بت) مقارنة بـ float (32 بت)."
+                },
+                {
+                    id: 10,
+                    question: "أي من هذه التطبيقات يناسب لغات البرمجة المنطقية؟",
+                    type: "multipleChoice",
+                    options: [
+                        "تطوير ألعاب الفيديو",
+                        "الذكاء الاصطناعي",
+                        "تطبيقات الويب",
+                        "إدارة قواعد البيانات"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - اللغات المنطقية مثل Prolog تستخدم في الذكاء الاصطناعي."
+                },
+                {
+                    id: 11,
+                    question: "ما حجم نوع short في الجافا بالبت؟",
+                    type: "multipleChoice",
+                    options: [
+                        "8",
+                        "16",
+                        "32",
+                        "64"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - short يحجز 16 بت في الذاكرة."
+                },
+                {
+                    id: 12,
+                    question: "أي من هذه اللغات تستخدم بشكل أساسي في تطوير تطبيقات iOS؟",
+                    type: "multipleChoice",
+                    options: [
+                        "Java",
+                        "Swift",
+                        "Kotlin",
+                        "C#"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - Swift هي اللغة الأساسية لتطوير تطبيقات iOS."
+                },
+                {
+                    id: 13,
+                    question: "ما الفرق بين أنواع البيانات الأولية والمرجعية في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "الأولية تخزن في المكدس والمرجعية في الكوم",
+                        "المرجعية تخزن القيم مباشرة",
+                        "لا فرق بينهما",
+                        "الأولية تستخدم للكائنات"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - الأنواع الأولية تخزن في المكدس بقيمها المباشرة، والمرجعية تخزن في الكوم."
+                },
+                {
+                    id: 14,
+                    question: "أي من هذه اللغات تعتبر لغة برمجة وظيفية؟",
+                    type: "multipleChoice",
+                    options: [
+                        "Java",
+                        "C++",
+                        "Haskell",
+                        "Python"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: ج - Haskell هي لغة برمجة وظيفية بحتة."
+                },
+                {
+                    id: 15,
+                    question: "ما القيمة الافتراضية لنوع boolean في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "true",
+                        "false",
+                        "0",
+                        "null"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - القيمة الافتراضية لـ boolean هي false."
+                },
+                {
+                    id: 16,
+                    question: "أي من هذه المكونات جزء من JDK؟",
+                    type: "multipleChoice",
+                    options: [
+                        "JVM",
+                        "JRE",
+                        "المتصفح",
+                        "نظام التشغيل"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - JVM جزء من حزمة تطوير الجافا (JDK)."
+                },
+                {
+                    id: 17,
+                    question: "ما نوع البيانات المناسب لتخزين حرف واحد في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "String",
+                        "char",
+                        "letter",
+                        "character"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - char يستخدم لتخزين حرف واحد."
+                },
+                {
+                    id: 18,
+                    question: "أي من هذه اللغات تستخدم في تحليل البيانات والإحصاءات؟",
+                    type: "multipleChoice",
+                    options: [
+                        "MATLAB",
+                        "HTML",
+                        "CSS",
+                        "Assembly"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - MATLAB متخصصة في التحليل العددي والإحصائي."
+                },
+                {
+                    id: 19,
+                    question: "ما حجم نوع int في الجافا بالبت؟",
+                    type: "multipleChoice",
+                    options: [
+                        "16",
+                        "32",
+                        "64",
+                        "8"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - int يحجز 32 بت في الذاكرة."
+                },
+                {
+                    id: 20,
+                    question: "أي من هذه الميزات تنتمي للغة الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "التنفيذ المباشر على العتاد",
+                        "الاستقلالية عن المنصة",
+                        "الحاجة لإعادة الترجمة لكل نظام",
+                        "الاعتماد على لغة الآلة"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - الجافا مستقلة عن المنصة بفضل JVM."
+                },
+                {
+                    id: 21,
+                    question: "ما المدى الذي يمكن أن يخزنه نوع char في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "0 إلى 255",
+                        "-128 إلى 127",
+                        "\\u0000 إلى \\uffff",
+                        "0 إلى 65535"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: ج - char يستخدم ترميز Unicode من \\u0000 إلى \\uffff."
+                },
+                {
+                    id: 22,
+                    question: "أي من هذه اللغات تستخدم في تطوير ألعاب الفيديو؟",
+                    type: "multipleChoice",
+                    options: [
+                        "C++",
+                        "HTML",
+                        "CSS",
+                        "SQL"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - C++ مستخدمة على نطاق واسع في تطوير الألعاب."
+                },
+                {
+                    id: 23,
+                    question: "ما نوع البيانات المناسب لتخزين عدد صحيح كبير في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "byte",
+                        "short",
+                        "int",
+                        "long"
+                    ],
+                    correctAnswer: 3,
+                    explanation: "✅ الإجابة: د - long يستخدم للأعداد الصحيحة الكبيرة جداً (64 بت)."
+                },
+                {
+                    id: 24,
+                    question: "أي من هذه اللغات تعتبر لغة برمجة كائنية التوجه؟",
+                    type: "multipleChoice",
+                    options: [
+                        "Java",
+                        "C",
+                        "Assembly",
+                        "Fortran"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - Java لغة كائنية التوجه بشكل كامل."
+                },
+                {
+                    id: 25,
+                    question: "ما الغرض من البايت كود في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "كتابة الكود المصدر",
+                        "التنفيذ المباشر على المعالج",
+                        "التمثيل الوسيط بين المصدر والتنفيذ",
+                        "تصحيح الأخطاء"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: ج - البايت كود وسيط بين الكود المصدر والتنفيذ على JVM."
+                },
+                {
+                    id: 26,
+                    question: "أي من هذه الأنواع يعتبر نوعاً مرجعياً في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "int",
+                        "float",
+                        "String",
+                        "boolean"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: ج - String هو نوع مرجعي (كائن) في الجافا."
+                },
+                {
+                    id: 27,
+                    question: "ما الميزة الرئيسية للغات منخفضة المستوى؟",
+                    type: "multipleChoice",
+                    options: [
+                        "سهولة الفهم",
+                        "التحكم الدقيق في العتاد",
+                        "الإنتاجية العالية",
+                        "الاستقلالية"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - اللغات المنخفضة المستوى توفر تحكماً دقيقاً في العتاد."
+                },
+                {
+                    id: 28,
+                    question: "أي من هذه اللغات تستخدم في الذكاء الاصطناعي؟",
+                    type: "multipleChoice",
+                    options: [
+                        "Lisp",
+                        "HTML",
+                        "CSS",
+                        "SQL"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - Lisp من أوائل اللغات المستخدمة في الذكاء الاصطناعي."
+                },
+                {
+                    id: 29,
+                    question: "ما القيمة الافتراضية لنوع int في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "0",
+                        "1",
+                        "null",
+                        "undefined"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - القيمة الافتراضية لـ int هي 0."
+                },
+                {
+                    id: 30,
+                    question: "أي من هذه المكونات ليس جزءاً من بيئة تطوير الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "المترجم",
+                        "JVM",
+                        "المتصفح",
+                        "أدوات التصحيح"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: ج - المتصفح ليس جزءاً أساسياً من JDK."
+                },
+                {
+                    id: 31,
+                    question: "ما نوع البيانات المناسب لتخزين عدد عشري بسيط في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "float",
+                        "double",
+                        "decimal",
+                        "real"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - float كافٍ للأعداد العشرية البسيطة (7 أرقام عشرية)."
+                },
+                {
+                    id: 32,
+                    question: "أي من هذه اللغات تعتبر لغة برمجة إجرائية؟",
+                    type: "multipleChoice",
+                    options: [
+                        "Java",
+                        "C",
+                        "Python",
+                        "Haskell"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - C لغة إجرائية تعتمد على الدوال والإجراءات."
+                },
+                {
+                    id: 33,
+                    question: "ما ميزة البرمجة الكائنية في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "صعوبة الصيانة",
+                        "إعادة استخدام الكود",
+                        "التعقيد",
+                        "البطء"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - البرمجة الكائنية تتيح إعادة استخدام الكود وسهولة الصيانة."
+                },
+                {
+                    id: 34,
+                    question: "أي من هذه اللغات تستخدم في تطوير تطبيقات Android؟",
+                    type: "multipleChoice",
+                    options: [
+                        "Swift",
+                        "Kotlin",
+                        "Objective-C",
+                        "C#"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - Kotlin هي اللغة المفضلة حالياً لتطوير تطبيقات Android."
+                },
+                {
+                    id: 35,
+                    question: "ما حجم نوع long في الجافا بالبت؟",
+                    type: "multipleChoice",
+                    options: [
+                        "32",
+                        "64",
+                        "16",
+                        "8"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - long يحجز 64 بت في الذاكرة."
+                },
+                {
+                    id: 36,
+                    question: "أي من هذه الأنواع ليس من الأنواع الأولية في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "int",
+                        "float",
+                        "String",
+                        "char"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: ج - String نوع مرجعي وليس أولي."
+                },
+                {
+                    id: 37,
+                    question: "ما الفائدة من استخدام لغة Java في تطبيقات المؤسسات؟",
+                    type: "multipleChoice",
+                    options: [
+                        "البطء",
+                        "الموثوقية العالية",
+                        "صعوبة الاستخدام",
+                        "عدم الأمان"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - Java تتميز بالموثوقية العالية مما يجعلها مناسبة لتطبيقات المؤسسات."
+                },
+                {
+                    id: 38,
+                    question: "أي من هذه اللغات تستخدم في أتمتة المهام وإدارة الأنظمة؟",
+                    type: "multipleChoice",
+                    options: [
+                        "Python",
+                        "Java",
+                        "C++",
+                        "HTML"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - Python ممتازة في أتمتة المهام وإدارة الأنظمة."
+                },
+                {
+                    id: 39,
+                    question: "ما المدى الذي يمكن أن يخزنه نوع float في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "7 أرقام عشرية",
+                        "15 رقم عشري",
+                        "5 أرقام عشرية",
+                        "10 أرقام عشرية"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - float يدعم حتى 7 أرقام عشرية بدقة."
+                },
+                {
+                    id: 40,
+                    question: "أي من هذه اللغات تعتبر لغة ترميز وليست لغة برمجة؟",
+                    type: "multipleChoice",
+                    options: [
+                        "Java",
+                        "Python",
+                        "HTML",
+                        "C++"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: ج - HTML لغة ترميز تستخدم في بناء هيكل صفحات الويب."
+                },
+                {
+                    id: 41,
+                    question: "ما ميزة دعم الجافا للتزامن (Multithreading)؟",
+                    type: "multipleChoice",
+                    options: [
+                        "تنفيذ مهمة واحدة فقط",
+                        "تنفيذ عدة مهام في وقت واحد",
+                        "إبطاء التطبيقات",
+                        "تعقيد البرمجة"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - التزامن يسمح بتنفيذ عدة مهام في وقت واحد."
+                },
+                {
+                    id: 42,
+                    question: "أي من هذه اللغات تستخدم في برمجة قواعد البيانات؟",
+                    type: "multipleChoice",
+                    options: [
+                        "SQL",
+                        "Java",
+                        "Python",
+                        "C++"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - SQL متخصصة في التعامل مع قواعد البيانات."
+                },
+                {
+                    id: 43,
+                    question: "ما نوع البيانات المناسب لتخزين عمر شخص في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "byte",
+                        "short",
+                        "int",
+                        "long"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: ج - int مناسب لتخزين العمر (قيم صحيحة متوسطة)."
+                },
+                {
+                    id: 44,
+                    question: "أي من هذه المميزات تنطبق على لغة الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "مرتبطة بنظام تشغيل معين",
+                        "تحتاج لإعادة ترجمة لكل نظام",
+                        "تعمل على أنظمة متعددة",
+                        "تنفذ مباشرة على العتاد"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: ج - الجافا تعمل على أنظمة متعددة بفضل JVM."
+                },
+                {
+                    id: 45,
+                    question: "ما الفرق بين Compiler و Interpreter؟",
+                    type: "multipleChoice",
+                    options: [
+                        "لا فرق بينهما",
+                        "المترجم الفوري يحول الكود كاملاً",
+                        "المترجم ينفذ سطراً بسطر",
+                        "المترجم يحول الكود كاملاً قبل التنفيذ"
+                    ],
+                    correctAnswer: 3,
+                    explanation: "✅ الإجابة: د - المترجم يحول الكود كاملاً بينما المترجم الفوري ينفذ سطراً بسطر."
+                },
+                {
+                    id: 46,
+                    question: "أي من هذه اللغات تستخدم في تطوير تطبيقات الويب؟",
+                    type: "multipleChoice",
+                    options: [
+                        "JavaScript",
+                        "Assembly",
+                        "Machine Code",
+                        "VHDL"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - JavaScript أساسية في تطوير تطبيقات الويب التفاعلية."
+                },
+                {
+                    id: 47,
+                    question: "ما القيمة الافتراضية لنوع String في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "\"\"",
+                        "null",
+                        "\" \"",
+                        "undefined"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - القيمة الافتراضية لـ String هي null."
+                },
+                {
+                    id: 48,
+                    question: "أي من هذه اللغات تعتبر لغة برمجة منطقية؟",
+                    type: "multipleChoice",
+                    options: [
+                        "Prolog",
+                        "Java",
+                        "Python",
+                        "C++"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - Prolog لغة برمجة منطقية."
+                },
+                {
+                    id: 49,
+                    question: "ما الميزة الرئيسية للبايت كود في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "التنفيذ السريع على العتاد",
+                        "الاستقلالية عن المنصة",
+                        "سهولة القراءة",
+                        "عدم الحاجة لترجمة"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - البايت كود يمكن تشغيله على أي نظام به JVM."
+                },
+                {
+                    id: 50,
+                    question: "أي من هذه الأنواع الأولية يستخدم لتخزين القيم العشرية في الجافا؟",
+                    type: "multipleChoice",
+                    options: [
+                        "float و double",
+                        "int و long",
+                        "byte و short",
+                        "boolean و char"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - float و double مخصصان للأعداد العشرية."
+                }
+            ];
+
+            examState.userAnswers = new Array(examState.totalQuestions).fill(null);
+            examState.answeredQuestions = new Array(examState.totalQuestions).fill(false);
+        }
+
+        // عرض السؤال الحالي
+        function displayCurrentQuestion() {
+            const question = examState.questions[examState.currentQuestionIndex];
+            
+            currentQuestionEl.textContent = examState.currentQuestionIndex + 1;
+            
+            // تحديث شريط التقدم
+            const progress = ((examState.currentQuestionIndex + 1) / examState.totalQuestions) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            let questionHTML = `
+                <div class="question">
+                    <div class="question-number">
+                        السؤال ${examState.currentQuestionIndex + 1}
+                    </div>
+                    <h3>${question.question}</h3>
+                    <div class="options">
+            `;
+            
+            // تسمية الخيارات (أ، ب، ج، د)
+            const labels = ['أ', 'ب', 'ج', 'د'];
+            
+            question.options.forEach((option, index) => {
+                questionHTML += `
+                    <label class="option ${examState.userAnswers[examState.currentQuestionIndex] === index ? 'selected answered' : ''}">
+                        <div class="option-label">${labels[index]}</div>
+                        <input type="radio" name="answer" value="${index}" 
+                            ${examState.userAnswers[examState.currentQuestionIndex] === index ? 'checked' : ''}
+                            ${examState.answeredQuestions[examState.currentQuestionIndex] ? 'disabled' : ''}>
+                        <div class="option-text">${option}</div>
+                    </label>
+                `;
+            });
+            
+            questionHTML += `
+                    </div>
+                    <div class="result-feedback" id="result-feedback"></div>
+                    <div class="explanation" id="explanation">
+                        ${question.explanation}
+                    </div>
+                </div>
+            `;
+            
+            questionContainer.innerHTML = questionHTML;
+            
+            // إذا كان السؤال مجاباً عليه مسبقاً، نعرض النتيجة
+            if (examState.answeredQuestions[examState.currentQuestionIndex]) {
+                showAnswerResult();
+            }
+            
+            // إضافة مستمعي الأحداث للخيارات (فقط إذا لم يتم الإجابة بعد)
+            if (!examState.answeredQuestions[examState.currentQuestionIndex]) {
+                document.querySelectorAll('.option input').forEach(input => {
+                    input.addEventListener('change', function() {
+                        const answerValue = parseInt(this.value);
+                        
+                        examState.userAnswers[examState.currentQuestionIndex] = answerValue;
+                        examState.answeredQuestions[examState.currentQuestionIndex] = true;
+                        
+                        // عرض نتيجة الإجابة
+                        showAnswerResult();
+                        
+                        updateProgress();
+                        updateNavigationButtons();
+                        
+                        // إظهار زر التالي بعد الإجابة
+                        nextBtn.style.display = 'inline-block';
+                        
+                        // الانتقال التلقائي بعد 3 ثواني
+                        clearTimeout(examState.autoMoveTimeout);
+                        examState.autoMoveTimeout = setTimeout(() => {
+                            if (examState.currentQuestionIndex < examState.totalQuestions - 1) {
+                                moveToNextQuestion();
+                            }
+                        }, 3000);
+                    });
+                });
+            }
+            
+            updateNavigationButtons();
+        }
+
+        // عرض نتيجة الإجابة
+        function showAnswerResult() {
+            const question = examState.questions[examState.currentQuestionIndex];
+            const userAnswer = examState.userAnswers[examState.currentQuestionIndex];
+            const isCorrect = userAnswer === question.correctAnswer;
+            
+            // تعطيل جميع الخيارات
+            document.querySelectorAll('.option input').forEach(inp => {
+                inp.disabled = true;
+            });
+            
+            // إضافة رموز الصح والخطأ للخيارات
+            document.querySelectorAll('.option').forEach((option, index) => {
+                // إزالة الفئات السابقة
+                option.classList.remove('correct', 'wrong');
+                
+                // لأسئلة الاختيار من متعدد
+                if (index === question.correctAnswer) {
+                    option.classList.add('correct');
+                }
+                if (index === userAnswer && !isCorrect) {
+                    option.classList.add('wrong');
+                }
+                
+                // إضافة الرموز
+                if (option.classList.contains('correct') && !option.querySelector('.option-status')) {
+                    const statusIcon = document.createElement('span');
+                    statusIcon.className = 'option-status correct';
+                    statusIcon.innerHTML = '✅';
+                    option.appendChild(statusIcon);
+                } else if (option.classList.contains('wrong') && !option.querySelector('.option-status')) {
+                    const statusIcon = document.createElement('span');
+                    statusIcon.className = 'option-status wrong';
+                    statusIcon.innerHTML = '❌';
+                    option.appendChild(statusIcon);
+                }
+            });
+            
+            // عرض رسالة النتيجة
+            const feedbackEl = document.getElementById('result-feedback');
+            const explanationEl = document.getElementById('explanation');
+            
+            if (isCorrect) {
+                feedbackEl.className = 'result-feedback correct';
+                feedbackEl.innerHTML = '✅ إجابة صحيحة!';
+                feedbackEl.style.display = 'block';
+            } else {
+                feedbackEl.className = 'result-feedback wrong';
+                feedbackEl.innerHTML = '❌ إجابة خاطئة!';
+                feedbackEl.style.display = 'block';
+            }
+            
+            // عرض المبرر
+            if (explanationEl) {
+                explanationEl.classList.add('show');
+            }
+        }
+
+        // تحديث التقدم
+        function updateProgress() {
+            const answered = examState.answeredQuestions.filter(Boolean).length;
+            const unanswered = examState.totalQuestions - answered;
+            
+            answeredCountEl.textContent = answered;
+            unansweredCountEl.textContent = unanswered;
+        }
+
+        // تحديث أزرار التنقل
+        function updateNavigationButtons() {
+            // إظهار زر إنهاء الاختبار إذا تم الإجابة على جميع الأسئلة
+            const allAnswered = examState.answeredQuestions.every(Boolean);
+            if (allAnswered) {
+                submitExamBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'none';
+            } else {
+                submitExamBtn.style.display = 'none';
+                nextBtn.style.display = examState.answeredQuestions[examState.currentQuestionIndex] ? 'inline-block' : 'none';
+            }
+        }
+
+        // بدء المؤقت
+        function startTimer() {
+            examState.timeLeft = 60;
+            updateTimerDisplay();
+            timerEl.classList.remove('warning', 'danger');
+            
+            clearInterval(examState.timer);
+            examState.timer = setInterval(() => {
+                examState.timeLeft--;
+                updateTimerDisplay();
+                
+                if (examState.timeLeft <= 10) {
+                    timerEl.classList.add('danger');
+                } else if (examState.timeLeft <= 30) {
+                    timerEl.classList.add('warning');
+                }
+                
+                if (examState.timeLeft <= 0) {
+                    clearInterval(examState.timer);
+                    // إذا انتهى الوقت ولم يتم الإجابة، يحسب خطأ ويتنقل للسؤال التالي
+                    if (!examState.answeredQuestions[examState.currentQuestionIndex]) {
+                        examState.userAnswers[examState.currentQuestionIndex] = null;
+                        examState.answeredQuestions[examState.currentQuestionIndex] = true;
+                        updateProgress();
+                    }
+                    moveToNextQuestion();
+                }
+            }, 1000);
+        }
+
+        // تحديث عرض المؤقت
+        function updateTimerDisplay() {
+            const minutes = Math.floor(examState.timeLeft / 60);
+            const seconds = examState.timeLeft % 60;
+            timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // الانتقال للسؤال التالي
+        function moveToNextQuestion() {
+            clearTimeout(examState.autoMoveTimeout);
+            
+            if (examState.currentQuestionIndex < examState.questions.length - 1) {
+                clearInterval(examState.timer);
+                examState.currentQuestionIndex++;
+                displayCurrentQuestion();
+                startTimer();
+                nextBtn.style.display = 'none';
+            } else {
+                submitExamBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'none';
+            }
+        }
+
+        // حساب النتيجة
+        function calculateResult() {
+            let correctCount = 0;
+            examState.questions.forEach((question, index) => {
+                if (examState.userAnswers[index] === question.correctAnswer) {
+                    correctCount++;
+                }
+            });
+            
+            const percentage = Math.round((correctCount / examState.questions.length) * 100);
+            
+            localStorage.setItem('examScore', percentage);
+            localStorage.setItem('correctAnswers', correctCount);
+            localStorage.setItem('totalQuestions', examState.questions.length);
+            localStorage.setItem('answeredQuestions', examState.answeredQuestions.filter(Boolean).length);
+            localStorage.setItem('selectedLecture', '5'); // تحديد أنها المحاضرة الخامسة
+        }
+
+        // مستمعي الأحداث
+        nextBtn.addEventListener('click', function() {
+            moveToNextQuestion();
+        });
+
+        submitExamBtn.addEventListener('click', function() {
+            clearInterval(examState.timer);
+            clearTimeout(examState.autoMoveTimeout);
+            calculateResult();
+            window.location.href = 'results.html';
+        });
+
+        // بدء التطبيق
+        window.addEventListener('load', startExam);
+    </script>
+</body>
+</html>

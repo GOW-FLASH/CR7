@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبارات CR7 - امتحان المحاضرة الرابعة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --dark-border: #333;
+            --text-light: #ffffff;
+            --text-muted: #b0b0b0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: 
+                linear-gradient(135deg, rgba(52, 152, 219, 0.05) 0%, rgba(44, 62, 80, 0.05) 100%),
+                var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(52, 152, 219, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(46, 204, 113, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(155, 89, 182, 0.1) 0%, transparent 50%);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(44, 62, 80, 0.9));
+            color: white;
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: #3498db;
+            filter: drop-shadow(0 0 10px rgba(52, 152, 219, 0.5));
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .exam-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .student-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .progress-info {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .progress-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .progress-item.answered {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid #2ecc71;
+        }
+
+        .progress-item.unanswered {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid #e74c3c;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: transparent;
+            color: var(--text-light);
+            padding: 2rem 0;
+            text-align: center;
+            flex-grow: 1;
+            position: relative;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Exam Container */
+        .exam-container {
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 900px;
+            margin: 2rem auto;
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--dark-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exam-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+        }
+
+        /* Exam Header */
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .question-counter {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        .timer {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .timer.warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            animation: pulse 1s infinite;
+        }
+
+        .timer.danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        /* Question Styles */
+        .question {
+            background: rgba(40, 40, 40, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--dark-border);
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            border-color: #3498db;
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.2);
+        }
+
+        .question h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .question-number {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: rgba(50, 50, 50, 0.8);
+            border: 2px solid #333;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .option:hover {
+            border-color: #3498db;
+            background: rgba(52, 152, 219, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .option.selected {
+            border-color: #2ecc71;
+            background: rgba(46, 204, 113, 0.1);
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .option.wrong {
+            border-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+            box-shadow: 0 0 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .option.correct {
+            border-color: #2ecc71;
+            background: rgba(46, 204, 113, 0.1);
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .option.answered {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option.answered:hover {
+            transform: none;
+            border-color: #333;
+            background: rgba(50, 50, 50, 0.8);
+        }
+
+        .option input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .option.answered input {
+            cursor: not-allowed;
+        }
+
+        .option-label {
+            background: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .option-status {
+            position: absolute;
+            left: 15px;
+            font-size: 1.2rem;
+        }
+
+        .option-status.correct {
+            color: #2ecc71;
+        }
+
+        .option-status.wrong {
+            color: #e74c3c;
+        }
+
+        .result-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .result-feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #2ecc71;
+            color: #2ecc71;
+        }
+
+        .result-feedback.wrong {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+            color: #e74c3c;
+        }
+
+        .explanation {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 8px;
+            border-right: 4px solid #3498db;
+            display: none;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .explanation.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Exam Actions */
+        .exam-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--dark-border);
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .btn:disabled {
+            background: #7f8c8d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn:disabled:hover::before {
+            left: -100%;
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(26, 26, 26, 0.9);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--dark-border);
+        }
+        
+        .credits {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .footer-text {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .exam-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .progress-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .exam-container {
+                padding: 1.5rem;
+                margin: 1rem auto;
+            }
+
+            .exam-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .exam-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .exam-actions .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .question {
+                padding: 1.5rem;
+            }
+
+            .option {
+                padding: 12px 15px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الخلفية المتحركة -->
+    <div class="animated-bg"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <h1>اختبارات CR7 - المحاضرة الرابعة</h1>
+                </div>
+                <div class="exam-info">
+                    <div class="student-info" id="student-info-display">
+                        الطالب: <span id="student-name">-</span>
+                    </div>
+                    <div class="student-info">
+                        المحاضرة: <span id="lecture-number">الرابعة</span>
+                    </div>
+                    <div class="progress-info">
+                        <div class="progress-item answered" id="answered-count">
+                            <i class="fas fa-check-circle"></i> <span id="answered">0</span>
+                        </div>
+                        <div class="progress-item unanswered" id="unanswered-count">
+                            <i class="fas fa-times-circle"></i> <span id="unanswered">10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>اختبار المحاضرة الرابعة - خرائط التدفق العملية</h2>
+            
+            <div class="exam-container">
+                <div class="exam-header">
+                    <div class="question-counter">
+                        السؤال <span id="current-question">1</span> من <span id="total-questions">10</span>
+                    </div>
+                    <div class="timer" id="timer">01:00</div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                
+                <div id="question-container">
+                    <!-- الأسئلة تظهر هنا ديناميكياً -->
+                </div>
+                
+                <div class="exam-actions">
+                    <button id="next-btn" class="btn" style="display: none;">
+                        التالي <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button id="submit-exam" class="btn btn-success" style="display: none;">
+                        إنهاء الاختبار <i class="fas fa-flag-checkered"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="credits">
+                <i class="fas fa-code"></i> نظام CR7
+            </div>
+            <p class="footer-text">جميع الحقوق محفوظة &copy; 2025 CR7</p>
+        </div>
+    </footer>
+
+    <script>
+        // بيانات الاختبار
+        let examState = {
+            currentQuestionIndex: 0,
+            userAnswers: [],
+            answeredQuestions: [],
+            timer: null,
+            timeLeft: 60,
+            questions: [],
+            totalQuestions: 10,
+            autoMoveTimeout: null
+        };
+
+        // عناصر DOM
+        const questionContainer = document.getElementById('question-container');
+        const currentQuestionEl = document.getElementById('current-question');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const timerEl = document.getElementById('timer');
+        const progressBar = document.getElementById('progress-bar');
+        const nextBtn = document.getElementById('next-btn');
+        const submitExamBtn = document.getElementById('submit-exam');
+        const studentNameEl = document.getElementById('student-name');
+        const lectureNumberEl = document.getElementById('lecture-number');
+        const answeredCountEl = document.getElementById('answered');
+        const unansweredCountEl = document.getElementById('unanswered');
+
+        // تحميل بيانات الطالب
+        function loadStudentData() {
+            const studentName = localStorage.getItem('studentName');
+
+            if (studentName) {
+                studentNameEl.textContent = studentName;
+            }
+            
+            // المحاضرة الرابعة ثابتة في هذه الصفحة
+            lectureNumberEl.textContent = 'الرابعة';
+            totalQuestionsEl.textContent = examState.totalQuestions;
+            unansweredCountEl.textContent = examState.totalQuestions;
+        }
+
+        // بدء الاختبار
+        function startExam() {
+            loadStudentData();
+            generateQuestions();
+            displayCurrentQuestion();
+            startTimer();
+            updateProgress();
+        }
+
+        // توليد الأسئلة للمحاضرة الرابعة (10 أسئلة)
+        function generateQuestions() {
+            examState.questions = [
+                {
+                    id: 1,
+                    question: "ارسم خريطة تدفق لحساب مساحة دائرة نصف قطرها R:",
+                    type: "multipleChoice",
+                    options: [
+                        "START → Read R → A = 3.14 * R * R → Print A → END",
+                        "START → Print A → A = 3.14 * R * R → Read R → END", 
+                        "START → Read R → Print A → A = 3.14 * R * R → END",
+                        "START → A = 3.14 * R * R → Read R → Print A → END"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - يجب قراءة R أولاً ثم حساب المساحة ثم طباعة الناتج"
+                },
+                {
+                    id: 2,
+                    question: "ارسم خريطة تدفق لمقارنة رقمين A و B وطباعة الأكبر:",
+                    type: "multipleChoice",
+                    options: [
+                        "START → Read A,B → Print A → Print B → END",
+                        "START → Read A,B → IS A=B? → YES: Print 'equal' → NO: IS A>B? → YES: Print A → NO: Print B → END",
+                        "START → Read A,B → IS A>B? → YES: Print A → NO: Print B → END",
+                        "START → Read A,B → Print 'equal' → Print A → Print B → END"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - يجب التحقق من التساوي أولاً، ثم المقارنة لطباعة الأكبر"
+                },
+                {
+                    id: 3,
+                    question: "ارسم خريطة تدفق لحساب مضروب العدد n:",
+                    type: "multipleChoice",
+                    options: [
+                        "START → Read n → fact=1 → i=1 → IS i<=n? → YES: fact=fact*i → i=i+1 → NO: Print fact → END",
+                        "START → Read n → Print fact → fact=1 → i=1 → END",
+                        "START → Read n → fact=1 → i=n → IS i>=1? → YES: fact=fact*i → i=i-1 → NO: Print fact → END",
+                        "START → Read n → fact=0 → i=n → IS i>0? → YES: fact=fact*i → i=i-1 → NO: Print fact → END"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "✅ الإجابة: ج - الخريطة الصحيحة تبدأ بـ fact=1 وتنقص i حتى تصل إلى 1"
+                },
+                {
+                    id: 4,
+                    question: "ارسم خريطة تدفق لقسمة رقمين والتحقق من القسمة على صفر:",
+                    type: "multipleChoice",
+                    options: [
+                        "START → Read Num1, Num2 → Result=Num1/Num2 → Print Result → END",
+                        "START → Read Num1, Num2 → IS Num2=0? → YES: Print 'not defined' → NO: Result=Num1/Num2 → Print Result → END",
+                        "START → Read Num1, Num2 → IS Num1=0? → YES: Print 'not defined' → NO: Result=Num1/Num2 → Print Result → END",
+                        "START → Read Num1, Num2 → Print 'not defined' → Result=Num1/Num2 → Print Result → END"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "✅ الإجابة: ب - يجب التحقق من أن المقام لا يساوي صفر قبل القسمة"
+                },
+                {
+                    id: 5,
+                    question: "ارسم خريطة تدفق لحساب متوسط ثلاث درجات وتحديد 'Hot' أو 'Cold':",
+                    type: "multipleChoice",
+                    options: [
+                        "START → Read t1,t2,t3 → sum=t1+t2+t3 → avg=sum/3 → IS avg<15? → YES: Print 'Cold' → NO: Print 'Hot' → END",
+                        "START → Read t1,t2,t3 → Print 'Hot' → Print 'Cold' → END",
+                        "START → Read t1,t2,t3 → sum=t1+t2+t3 → avg=sum/3 → Print 'Hot' → Print 'Cold' → END",
+                        "START → Read t1,t2,t3 → IS avg<15? → YES: Print 'Cold' → NO: Print 'Hot' → sum=t1+t2+t3 → avg=sum/3 → END"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - يجب حساب المتوسط أولاً ثم التحقق من الشرط"
+                },
+                {
+                    id: 6,
+                    question: "ارسم خريطة تدفق لحساب راتب عامل مع ساعات إضافية:",
+                    type: "multipleChoice",
+                    options: [
+                        "START → basic=4000 → Read total_hours → IS total_hours>120? → YES: over_hours=total_hours-120 → over_time=over_hours*200 → salary=basic+over_time → NO: salary=basic → Print salary → END",
+                        "START → basic=4000 → Read total_hours → salary=basic → Print salary → END",
+                        "START → basic=4000 → Read total_hours → over_hours=total_hours-120 → over_time=over_hours*200 → salary=basic+over_time → Print salary → END",
+                        "START → Read total_hours → basic=4000 → salary=basic+200 → Print salary → END"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - الخريطة الصحيحة تتحقق من وجود ساعات إضافية أولاً"
+                },
+                {
+                    id: 7,
+                    question: "ارسم خريطة تدفق لتحديد تقدير الطالب بناءً على الدرجة:",
+                    type: "multipleChoice",
+                    options: [
+                        "START → Read mark → IS mark>=85? → YES: Print 'Excellent' → NO: IS mark>=75? → YES: Print 'V.Good' → NO: IS mark>=65? → YES: Print 'Good' → NO: IS mark>=50? → YES: Print 'Pass' → NO: Print 'Fail' → END",
+                        "START → Read mark → Print 'Excellent' → Print 'V.Good' → Print 'Good' → Print 'Pass' → Print 'Fail' → END",
+                        "START → Read mark → IS mark<50? → YES: Print 'Fail' → NO: Print 'Pass' → END",
+                        "START → Read mark → IS mark>=50? → YES: Print 'Pass' → NO: Print 'Fail' → IS mark>=65? → YES: Print 'Good' → NO: END"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - الخريطة الصحيحة تتحقق من جميع التقديرات بالترتيب من الأعلى للأدنى"
+                },
+                {
+                    id: 8,
+                    question: "ارسم خريطة تدفق لحساب محيط مستطيل وتحديد إذا كان ملعباً دولياً:",
+                    type: "multipleChoice",
+                    options: [
+                        "START → Read L,W → Perimeter=(L+W)*2 → IS Perimeter≥600? → YES: Print 'دولي' → NO: Print 'محلي' → END",
+                        "START → Read L,W → Print 'دولي' → Print 'محلي' → END",
+                        "START → Read L,W → Area=L*W → IS Area≥600? → YES: Print 'دولي' → NO: Print 'محلي' → END",
+                        "START → Read L,W → Perimeter=(L+W)*2 → IS Perimeter>600? → YES: Print 'محلي' → NO: Print 'دولي' → END"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - الخريطة الصحيحة تحسب المحيط وتتحقق من ≥600"
+                },
+                {
+                    id: 9,
+                    question: "ارسم خريطة تدفق لطباعة جدول ضرب عدد من 1 إلى 10:",
+                    type: "multipleChoice",
+                    options: [
+                        "START → Read n → i=1 → IS i<=10? → YES: result=n*i → Print result → i=i+1 → NO: END",
+                        "START → Read n → Print n*1 → Print n*2 → ... → Print n*10 → END",
+                        "START → Read n → i=1 → result=n*i → Print result → i=i+1 → END",
+                        "START → Read n → i=10 → IS i>=1? → YES: result=n*i → Print result → i=i-1 → NO: END"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - الخريطة الصحيحة تستخدم حلقة لتكرار الضرب من 1 إلى 10"
+                },
+                {
+                    id: 10,
+                    question: "ارسم خريطة تدفق لجمع 10 أعداد وطباعة المجموع:",
+                    type: "multipleChoice",
+                    options: [
+                        "START → sum=0 → i=1 → IS i<=10? → YES: Read num → sum=sum+num → i=i+1 → NO: Print sum → END",
+                        "START → sum=0 → Read num → sum=sum+num → Print sum → END",
+                        "START → i=1 → IS i<=10? → YES: Read num → i=i+1 → NO: Print sum → END",
+                        "START → sum=0 → i=10 → IS i>=1? → YES: Read num → sum=sum+num → i=i-1 → NO: Print sum → END"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "✅ الإجابة: أ - الخريطة الصحيحة تجمع 10 أعداد باستخدام حلقة وتطبع المجموع النهائي"
+                }
+            ];
+
+            examState.userAnswers = new Array(examState.totalQuestions).fill(null);
+            examState.answeredQuestions = new Array(examState.totalQuestions).fill(false);
+        }
+
+        // عرض السؤال الحالي
+        function displayCurrentQuestion() {
+            const question = examState.questions[examState.currentQuestionIndex];
+            
+            currentQuestionEl.textContent = examState.currentQuestionIndex + 1;
+            
+            // تحديث شريط التقدم
+            const progress = ((examState.currentQuestionIndex + 1) / examState.totalQuestions) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            let questionHTML = `
+                <div class="question">
+                    <div class="question-number">
+                        السؤال ${examState.currentQuestionIndex + 1}
+                    </div>
+                    <h3>${question.question}</h3>
+                    <div class="options">
+            `;
+            
+            // تسمية الخيارات (أ، ب، ج، د)
+            const labels = ['أ', 'ب', 'ج', 'د'];
+            
+            question.options.forEach((option, index) => {
+                questionHTML += `
+                    <label class="option ${examState.userAnswers[examState.currentQuestionIndex] === index ? 'selected answered' : ''}">
+                        <div class="option-label">${labels[index]}</div>
+                        <input type="radio" name="answer" value="${index}" 
+                            ${examState.userAnswers[examState.currentQuestionIndex] === index ? 'checked' : ''}
+                            ${examState.answeredQuestions[examState.currentQuestionIndex] ? 'disabled' : ''}>
+                        <div class="option-text">${option}</div>
+                    </label>
+                `;
+            });
+            
+            questionHTML += `
+                    </div>
+                    <div class="result-feedback" id="result-feedback"></div>
+                    <div class="explanation" id="explanation">
+                        ${question.explanation}
+                    </div>
+                </div>
+            `;
+            
+            questionContainer.innerHTML = questionHTML;
+            
+            // إذا كان السؤال مجاباً عليه مسبقاً، نعرض النتيجة
+            if (examState.answeredQuestions[examState.currentQuestionIndex]) {
+                showAnswerResult();
+            }
+            
+            // إضافة مستمعي الأحداث للخيارات (فقط إذا لم يتم الإجابة بعد)
+            if (!examState.answeredQuestions[examState.currentQuestionIndex]) {
+                document.querySelectorAll('.option input').forEach(input => {
+                    input.addEventListener('change', function() {
+                        const answerValue = parseInt(this.value);
+                        
+                        examState.userAnswers[examState.currentQuestionIndex] = answerValue;
+                        examState.answeredQuestions[examState.currentQuestionIndex] = true;
+                        
+                        // عرض نتيجة الإجابة
+                        showAnswerResult();
+                        
+                        updateProgress();
+                        updateNavigationButtons();
+                        
+                        // إظهار زر التالي بعد الإجابة
+                        nextBtn.style.display = 'inline-block';
+                        
+                        // الانتقال التلقائي بعد 3 ثواني
+                        clearTimeout(examState.autoMoveTimeout);
+                        examState.autoMoveTimeout = setTimeout(() => {
+                            if (examState.currentQuestionIndex < examState.totalQuestions - 1) {
+                                moveToNextQuestion();
+                            }
+                        }, 3000);
+                    });
+                });
+            }
+            
+            updateNavigationButtons();
+        }
+
+        // عرض نتيجة الإجابة
+        function showAnswerResult() {
+            const question = examState.questions[examState.currentQuestionIndex];
+            const userAnswer = examState.userAnswers[examState.currentQuestionIndex];
+            const isCorrect = userAnswer === question.correctAnswer;
+            
+            // تعطيل جميع الخيارات
+            document.querySelectorAll('.option input').forEach(inp => {
+                inp.disabled = true;
+            });
+            
+            // إضافة رموز الصح والخطأ للخيارات
+            document.querySelectorAll('.option').forEach((option, index) => {
+                // إزالة الفئات السابقة
+                option.classList.remove('correct', 'wrong');
+                
+                // لأسئلة الاختيار من متعدد
+                if (index === question.correctAnswer) {
+                    option.classList.add('correct');
+                }
+                if (index === userAnswer && !isCorrect) {
+                    option.classList.add('wrong');
+                }
+                
+                // إضافة الرموز
+                if (option.classList.contains('correct') && !option.querySelector('.option-status')) {
+                    const statusIcon = document.createElement('span');
+                    statusIcon.className = 'option-status correct';
+                    statusIcon.innerHTML = '✅';
+                    option.appendChild(statusIcon);
+                } else if (option.classList.contains('wrong') && !option.querySelector('.option-status')) {
+                    const statusIcon = document.createElement('span');
+                    statusIcon.className = 'option-status wrong';
+                    statusIcon.innerHTML = '❌';
+                    option.appendChild(statusIcon);
+                }
+            });
+            
+            // عرض رسالة النتيجة
+            const feedbackEl = document.getElementById('result-feedback');
+            const explanationEl = document.getElementById('explanation');
+            
+            if (isCorrect) {
+                feedbackEl.className = 'result-feedback correct';
+                feedbackEl.innerHTML = '✅ إجابة صحيحة!';
+                feedbackEl.style.display = 'block';
+            } else {
+                feedbackEl.className = 'result-feedback wrong';
+                feedbackEl.innerHTML = '❌ إجابة خاطئة!';
+                feedbackEl.style.display = 'block';
+            }
+            
+            // عرض المبرر
+            if (explanationEl) {
+                explanationEl.classList.add('show');
+            }
+        }
+
+        // تحديث التقدم
+        function updateProgress() {
+            const answered = examState.answeredQuestions.filter(Boolean).length;
+            const unanswered = examState.totalQuestions - answered;
+            
+            answeredCountEl.textContent = answered;
+            unansweredCountEl.textContent = unanswered;
+        }
+
+        // تحديث أزرار التنقل
+        function updateNavigationButtons() {
+            // إظهار زر إنهاء الاختبار إذا تم الإجابة على جميع الأسئلة
+            const allAnswered = examState.answeredQuestions.every(Boolean);
+            if (allAnswered) {
+                submitExamBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'none';
+            } else {
+                submitExamBtn.style.display = 'none';
+                nextBtn.style.display = examState.answeredQuestions[examState.currentQuestionIndex] ? 'inline-block' : 'none';
+            }
+        }
+
+        // بدء المؤقت
+        function startTimer() {
+            examState.timeLeft = 60;
+            updateTimerDisplay();
+            timerEl.classList.remove('warning', 'danger');
+            
+            clearInterval(examState.timer);
+            examState.timer = setInterval(() => {
+                examState.timeLeft--;
+                updateTimerDisplay();
+                
+                if (examState.timeLeft <= 10) {
+                    timerEl.classList.add('danger');
+                } else if (examState.timeLeft <= 30) {
+                    timerEl.classList.add('warning');
+                }
+                
+                if (examState.timeLeft <= 0) {
+                    clearInterval(examState.timer);
+                    // إذا انتهى الوقت ولم يتم الإجابة، يحسب خطأ ويتنقل للسؤال التالي
+                    if (!examState.answeredQuestions[examState.currentQuestionIndex]) {
+                        examState.userAnswers[examState.currentQuestionIndex] = null;
+                        examState.answeredQuestions[examState.currentQuestionIndex] = true;
+                        updateProgress();
+                    }
+                    moveToNextQuestion();
+                }
+            }, 1000);
+        }
+
+        // تحديث عرض المؤقت
+        function updateTimerDisplay() {
+            const minutes = Math.floor(examState.timeLeft / 60);
+            const seconds = examState.timeLeft % 60;
+            timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // الانتقال للسؤال التالي
+        function moveToNextQuestion() {
+            clearTimeout(examState.autoMoveTimeout);
+            
+            if (examState.currentQuestionIndex < examState.questions.length - 1) {
+                clearInterval(examState.timer);
+                examState.currentQuestionIndex++;
+                displayCurrentQuestion();
+                startTimer();
+                nextBtn.style.display = 'none';
+            } else {
+                submitExamBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'none';
+            }
+        }
+
+        // حساب النتيجة
+        function calculateResult() {
+            let correctCount = 0;
+            examState.questions.forEach((question, index) => {
+                if (examState.userAnswers[index] === question.correctAnswer) {
+                    correctCount++;
+                }
+            });
+            
+            const percentage = Math.round((correctCount / examState.questions.length) * 100);
+            
+            localStorage.setItem('examScore', percentage);
+            localStorage.setItem('correctAnswers', correctCount);
+            localStorage.setItem('totalQuestions', examState.questions.length);
+            localStorage.setItem('answeredQuestions', examState.answeredQuestions.filter(Boolean).length);
+            localStorage.setItem('selectedLecture', '4'); // تحديد أنها المحاضرة الرابعة
+        }
+
+        // مستمعي الأحداث
+        nextBtn.addEventListener('click', function() {
+            moveToNextQuestion();
+        });
+
+        submitExamBtn.addEventListener('click', function() {
+            clearInterval(examState.timer);
+            clearTimeout(examState.autoMoveTimeout);
+            calculateResult();
+            window.location.href = 'results.html';
+        });
+
+        // بدء التطبيق
+        window.addEventListener('load', startExam);
+    </script>
+</body>
+</html>
